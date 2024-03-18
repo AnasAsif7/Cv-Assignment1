@@ -1,0 +1,71 @@
+body {
+    background-color: #121212; 
+    color: #fff; 
+}
+
+.container {
+    max-width: 600px;
+    background-color: #222;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    margin-top: 50px;
+}
+
+.form-control {
+    background-color: rgba(51, 51, 51, 0.8);
+    border: 1px solid #444;
+    color: #fff;
+    border-radius: 20px;
+}
+
+.form-control:focus {
+    background-color: rgba(68, 68, 68, 0.8);
+    border-color: #55ff55;
+    box-shadow: 0 0 5px #55ff55;
+}
+
+.btn-outline-success {
+    border: none;
+    color: #fff;
+    background-color: #28a745;
+    box-shadow: 0 0 5px #55ff55;
+    border-radius: 20px;
+    padding: 5px 15px;
+}
+
+label {
+    color: #ccc;
+}
+
+.signup-container {
+    background-image: url("https://wallpapercave.com/wp/wp5386706.jpg");
+    background-size: cover;
+    background-position: center;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+    
+}
+
+.background-container {
+    background-image: url("bt.jpg");
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    overflow: hidden;
+}
+
+#storiesList {
+    margin-top: 20px;
+}
+
+.hr {
+    border-top: 1px solid #444;
+}
+#storiesList {
+    max-height: 500px; /* Adjust the height according to your needs */
+    overflow-y: auto; /* This will add a vertical scrollbar to the div */
+    margin-bottom: 20px; /* Add some space at the bottom */
+}
+

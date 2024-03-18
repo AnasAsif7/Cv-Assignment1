@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Story CRUD Operations</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="crude.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="jcrude.js"></script>
+</head>
+<body>
+    <div class="background-container">
+        <div class="container mt-5 signup-container">
+            <h2 class="mb-4 text-center">Story CRUD Operations</h2>
+
+            <!-- Create Form -->
+            <form id="createForm">
+                <div class="form-group">
+                    <label for="createTitle">Title:</label>
+                    <input type="text" class="form-control" id="createTitle" required placeholder="Enter story title">
+                </div>
+                <div class="form-group">
+                    <label for="createContent">Content:</label>
+                    <textarea class="form-control" id="createContent" rows="3" required placeholder="Story content"></textarea>
+                </div>
+                <div class="text-center">
+                    <button id="createBtn" type="submit" class="btn btn-outline-success">Create</button>
+                    <button id="clearBtn" type="submit" class="btn btn-outline-success" style="display: none;">Clear</button>
+                </div>
+            </form>
+
+            <hr>
+
+            <!-- Display Stories -->
+            <div id="storiesList"></div>
+        </div>
+    </div>
+
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
