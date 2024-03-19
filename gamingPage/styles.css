@@ -1,0 +1,215 @@
+body {
+    background-color: #052547;
+  }
+.card {
+    margin: 0;
+    border: none;
+    background: none;
+    overflow: hidden; /* Ensures that no part of the image "leaks" outside the card */
+    transition: transform .5s ease; /* Smooth transformation upon hovering */
+    width: 100%;
+    height: 370px; /* Set a fixed height for the card */
+  }
+  
+  .card:hover {
+    transform: scale(1.1); /* Scale the card slightly on hover */
+  }
+  
+  .game-img-container {
+    line-height: 0; /* Removes the gap below the image */
+    height: 100%; /* Set the height of the image container */
+    overflow: hidden; /* Hide any content that exceeds the container height */
+  }
+  
+  .card-img-top {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Covers the entire container while maintaining aspect ratio */
+  }
+  
+  .game-details-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Distributes space between title and button */
+    background-color: #013369; /* Adjust the blue shade as needed */
+    height: 90%; /* Set the height of the details container */
+  }
+  
+  .game-details {
+    padding: 0.5em;
+    color: white;
+  }
+  
+  .game-title {
+    font-weight: bold;
+    font-size: 1.25em;
+  }
+  
+  .game-subtitle {
+    color: #999;
+    font-weight: lighter;
+    font-size: 0.9em;
+  }
+  
+  .discount-tag {
+    background-color: #ffcc00; /* Adjust discount tag color as needed */
+    color: black;
+    padding: 0.2em 0.6em;
+    margin-right: 0.5em;
+  }
+  
+  .original-price {
+    font-weight: lighter;
+    color: #999;
+  }
+  
+  .buy-now-container {
+    background-color: #0056b3; /* Adjust button color as needed */
+    padding: 0.5em;
+  }
+  
+  .btn-primary {
+    width: 100%;
+    border: none;
+    background-color: #0056b3;
+    color: white;
+    padding: 0.8em;
+    font-size: 1em;
+  }
+  
+  .btn-primary:hover {
+    background-color: #013369; /* Darker shade on hover */
+  }
+  /* css */
+
+
+
+
+
+  /* body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f0f5f9;  */
+    
+    /* Light blue background */
+  /* } */
+  
+  /* Navbar styles */
+/* Main navbar container */
+/* Main navbar container */
+/* Main navbar container */
+/* Main navbar container */
+/* Main navbar container */
+/* Main navbar container */
+/* Main navbar container */
+/* Main navbar container */
+.navbar {
+    background-color: #0056b3 !important; /* Dark blue navbar background */
+    transition: background-color 0.3s ease, transform 0.3s ease !important; /* Smooth transition on background color change and transform */
+  }
+  
+  /* Styling for navbar brand and nav links */
+  .navbar-brand,
+  .navbar-nav .nav-link {
+    color: white !important; /* White text */
+    transition: color 0.3s ease !important; /* Smooth transition on text color change */
+  }
+  
+  /* Styling for navbar brand and nav links on hover */
+  .navbar-brand:hover,
+  .navbar-nav .nav-link:hover {
+    color: #f0f5f9 !important; /* Light text on hover */
+  }
+  
+  /* Style the search form to be aligned to the right */
+  .navbar form {
+    margin-left: auto !important;
+  }
+  
+  /* Style the search input */
+  .navbar form input[type="search"] {
+    color: white !important; /* White text */
+    background-color: #013369 !important; /* Darker background color */
+    border-color: transparent !important; /* Hide the border */
+    border-radius: 20px !important; /* Rounder border radius */
+    transition: background-color 0.3s ease !important; /* Smooth transition on background color change */
+  }
+  
+  /* Style the search button */
+  .navbar form button[type="submit"] {
+    color: white !important; /* White text */
+    background-color: #0056b3 !important; /* Dark blue button background color */
+    border-color: transparent !important; /* Hide the border */
+    transition: background-color 0.3s ease, transform 0.3s ease !important; 
+    border-radius: 20px !important; /* Smooth transition on background color change and transform */
+  }
+  
+  /* Style the search button on hover */
+  .navbar form button[type="submit"]:hover {
+    background-color: #013369 !important; /* Darker shade on hover */
+    transform: scale(1.01); /* Scale the button slightly on hover */
+  }
+  
+  /* Style other navbar links */
+  .navbar-nav .nav-item:hover .nav-link {
+    transform: scale(1.1); /* Scale the link slightly on hover */
+  }
+  
+  /* Style disabled navbar links */
+  .navbar-nav .nav-item.disabled .nav-link {
+    color: rgba(255, 255, 255, 0.5) !important; /* Semi-transparent white text for disabled items */
+  }
+  
+  /* Transform scale on the entire navbar on hover */
+  .navbar:hover {
+    transform: scale(1.02); /* Scale the navbar slightly on hover */
+  }
+  
+  
+  
+  .image-container {
+    height: 195px; /* Fixed height for the container */
+    margin-bottom: 20px;
+    overflow: hidden;
+    position: relative; /* Needed for absolute positioning of overlay */
+    border-radius: 20px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    transition: transform 0.3s ease;
+  }
+
+  .image-container:hover {
+    transform: scale(1.07); /* Scales up the container on hover */
+  }
+
+  .image-container img {
+    width: 100%;
+    height: auto;
+    object-fit: cover; /* Ensures the image covers the container */
+  }
+
+  .image-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black overlay */
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    border-radius: 20px;
+  }
+
+  .image-container:hover .image-overlay {
+    opacity: 1; /* Shows the overlay on hover */
+  }
+
+  .image-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+  }
+

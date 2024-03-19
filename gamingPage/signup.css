@@ -47,7 +47,7 @@ label {
 }
 
 .signup-container {
-    background-image: url('https://www.chromethemer.com/download/hd-wallpapers/batman-3840x2160.jpg');
+    background-image: url('batman.jpg');
     background-size: cover;
     background-position: center;
     padding: 20px;
@@ -56,7 +56,7 @@ label {
 }
 
 .background-container {
-    background-image: url('https://www.chromethemer.com/download/hd-wallpapers/batman-3840x2160.jpg');
+    background-image: url('batman.jpg');
     background-size: cover;
     background-position: center;
     height: 100vh; 
