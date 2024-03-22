@@ -213,3 +213,28 @@ body {
     font-weight: bold;
   }
 
+  /* Custom styles for carousel */
+/* Custom styles for carousel */
+.carousel-item {
+  height: 500px !important; /* Adjust height as needed */
+}
+
+.carousel-item img {
+  object-fit: cover !important;
+  height: 100% !important;
+  width: 100% !important;
+}
+
+
+
+
+.carousel-control-prev,
+.carousel-control-next {
+  width: 3.5% !important; /* Adjust control button width */
+}
+
+.carousel-control-prev-icon::before,
+.carousel-control-next-icon::before {
+  color: rgb(5, 8, 191) !important; /* Control button color */
+}
+

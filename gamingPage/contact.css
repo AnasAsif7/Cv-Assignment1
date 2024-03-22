@@ -47,7 +47,7 @@ label {
 }
 
 .background-container {
-    background-image: url("greenback.jpg");
+    background-image: url("./images/greenback.jpg");
     background-size: cover;
     background-position: center;
     height: 100vh; 

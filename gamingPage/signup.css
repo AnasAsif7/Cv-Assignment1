@@ -56,7 +56,7 @@ label {
 }
 
 .background-container {
-    background-image: url('batman.jpg');
+    background-image: url('./images/batman.jpg');
     background-size: cover;
     background-position: center;
     height: 100vh; 
