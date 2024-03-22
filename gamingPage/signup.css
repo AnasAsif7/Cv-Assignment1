@@ -12,14 +12,14 @@ body {
 }
 
 .form-control {
-    background-color: rgba(51, 51, 51, 0.8); /* Lower opacity */
+    background-color: rgba(51, 51, 51, 0.8); 
     border: 1px solid #444;
     color: #fff;
     border-radius: 20px; 
 }
 
 .form-control:focus {
-    background-color: rgba(68, 68, 68, 0.8); /* Lower opacity */
+    background-color: rgba(68, 68, 68, 0.8); 
     border-color: #55ff55; 
     box-shadow: 0 0 5px #55ff55; 
 }
@@ -36,7 +36,7 @@ label {
 }
 
 .input-group-text {
-    background-color: rgba(51, 51, 51, 0.8); /* Lower opacity */
+    background-color: rgba(51, 51, 51, 0.8); 
     border: 1px solid #444;
     color: #fff;
 }
@@ -47,7 +47,7 @@ label {
 }
 
 .signup-container {
-    background-image: url('batman.jpg');
+    background-image: url('./images/batman.jpg');
     background-size: cover;
     background-position: center;
     padding: 20px;
