@@ -29,7 +29,7 @@ body {
 
 
 .btn-outline-success {
-    color:#5a37d8 ;
+    color:#4e2dc6 ;
     border: none;
     box-shadow: 0 0 10px #7a55ff; 
     width: 200px;
@@ -38,7 +38,7 @@ body {
 }
 .btn-outline-success:hover {
     background-color: #7a55ff; 
-    box-shadow: 0 0 5px #7a55ff; 
+    box-shadow: 0 0 5px #643fed; 
 }
 
 label {
