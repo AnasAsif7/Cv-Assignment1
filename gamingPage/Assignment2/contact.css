@@ -46,7 +46,7 @@ label {
 }
 
 .contact-container {
-    background-image: url('./images/wallpaperflare.com_wallpaper.jpg');
+    background-image: url('/gamingPage/images/wallpaperflare.com_wallpaper.jpg');
     background-size: cover;
     background-position: center;
     padding: 20px;
@@ -55,7 +55,7 @@ label {
 }
 
 .background-container {
-    background-image: url("./images/purplegalaxy.jpg");
+    background-image: url("/gamingPage/images/purplegalaxy.jpg");
     background-size: cover;
     background-position: center;
     height: 100vh; 

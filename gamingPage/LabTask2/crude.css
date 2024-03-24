@@ -46,7 +46,7 @@ label {
 }
 
 .signup-container {
-    background-image: url("./images/neon.jpeg");
+    background-image: url("/gamingPage/images/neon.jpeg");
     background-size: cover;
     background-position: center;
     padding: 20px;
@@ -57,7 +57,7 @@ label {
 }
 
 .background-container {
-    background-image: url("./images/neon.jpeg");
+    background-image: url("/gamingPage/images/neon.jpeg");
     background-size: cover;
     background-position: center;
     height: 100vh;
