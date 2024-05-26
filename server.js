@@ -46,6 +46,13 @@ app.use(
 );
 app.use(flash());
 
+// app.use((req, res, next) => {
+//   res.set('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+//   res.set('Pragma', 'no-cache');
+//   res.set('Expires', '0');
+//   res.set('Surrogate-Control', 'no-store');
+//   next();
+// });
 
 // Connect flash middleware
 
@@ -84,7 +91,7 @@ mongoose
   
 // Use routes
 
-// app.use(sessionAuth);
+app.use(sessionAuth);
 app.use("/", authRoutes);
 app.use("/", gameRoutes);
 app.use("/", cartRoutes);

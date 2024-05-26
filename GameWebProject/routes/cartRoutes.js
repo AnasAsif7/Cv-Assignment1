@@ -95,15 +95,6 @@ const express = require("express");
 const router = express.Router();
 const checkSessionAuth = require("../middleware/checkSessionAuth");
 const Game = require("../models/Game");
-const flash = require("connect-flash");
-
-router.use(flash());
-router.use((req, res, next) => {
-  res.locals.success_msg = req.flash("success_msg");
-  res.locals.error_msg = req.flash("error_msg");
-  res.locals.error = req.flash("error");
-  next();
-});
 
 // Add game to cart route
 router.post("/add-cart/:id", checkSessionAuth, async (req, res) => {
