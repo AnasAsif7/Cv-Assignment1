@@ -7,8 +7,6 @@ const flash = require("connect-flash");
 const cookieParser = require("cookie-parser");
 const config = require("config");
 
-
-
 // Import routes
 const authRoutes = require("./GameWebProject/routes/authRoutes");
 
@@ -16,15 +14,14 @@ const cartRoutes = require("./GameWebProject/routes/cartRoutes");
 const apiauth = require("./GameWebProject/middleware/apiauth");
 const checkSessionAuth = require("./GameWebProject/middleware/checkSessionAuth");
 const gameRoutes = require("./GameWebProject/routes/gameRoutes");
-const contactRoutes = require('./GameWebProject/routes/contactRoutes');
-const sessionAuth = require('./GameWebProject/middleware/sessionAuth');
+const contactRoutes = require("./GameWebProject/routes/contactRoutes");
+const sessionAuth = require("./GameWebProject/middleware/sessionAuth");
 
 const Game = require("./GameWebProject/models/Game");
 const app = express();
 
- // 
+//
 app.set("view engine", "ejs");
-
 
 // Set the views directory
 app.set("views", path.join(__dirname, "GameWebProject", "views"));
@@ -95,50 +92,29 @@ app.get("/api", (req, res) => {
 app.get("/protected-route", apiauth, (req, res) => {
   res.send("This is a protected route.");
 });
-// app.get('/search', async (req, res) => {
-//   const query = req.query.query;
-//   try {
-//       const games = await Game.find({ name: new RegExp(query, 'i') }); // Adjust the search logic as needed
-//       res.json(games);
-//   } catch (err) {
-//       res.status(500).send("Server Error");
-//   }
-// });
-// app.get('/search-query', async (req, res) => {
-//   const query = req.query.query;
-//   try {
-//     const regex = new RegExp(query.replace(/\s+/g, '\\s*'), 'i'); // Regex to ignore cases and spaces
-//     const games = await Game.find({ name: regex }); // Adjust the search logic as needed
-//     res.render('searchResults', { searchResults: games, query });
-//   } catch (err) {
-//     res.status(500).send("Server Error");
-//   }
-// });
 
 // Live search route
-app.get('/search', async (req, res) => {
+app.get("/search", async (req, res) => {
   const query = req.query.query;
   try {
-      const games = await Game.find({ name: new RegExp(query, 'i') });
-      res.json(games);
-  } catch (err) {
-      res.status(500).send("Server Error");
-  }
-});
-
-// Search results page route
-app.get('/search-query', async (req, res) => {
-  const query = req.query.query;
-  try {
-    const regex = new RegExp(query.replace(/\s+/g, '\\s*'), 'i');
-    const games = await Game.find({ name: regex });
-    res.render('searchResults', { searchResults: games, query });
+    const games = await Game.find({ name: new RegExp(query, "i") });
+    res.json(games);
   } catch (err) {
     res.status(500).send("Server Error");
   }
 });
 
-
+// Search results page route
+app.get("/search-query", async (req, res) => {
+  const query = req.query.query;
+  try {
+    const regex = new RegExp(query.replace(/\s+/g, "\\s*"), "i");
+    const games = await Game.find({ name: regex });
+    res.render("searchResults", { searchResults: games, query });
+  } catch (err) {
+    res.status(500).send("Server Error");
+  }
+});
 
 // Start the server
 app.listen(3000, () => {
@@ -194,7 +170,7 @@ const gameList = [
     descImg4:
       "https://images.greenmangaming.com/837ad3849bfb4f81b411335dbae05bc3/031ec06ed88b4e738e372de0282d4d63.jpeg",
     descImg5:
-      "https://images.greenmangaming.com/837ad3849bfb4f81b411335dbae05bc3/031ec06ed88b4e738e372de0282d4d63.jpeg",
+      "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/2369390/ss_b0fa07116df319216ac4a4e7855a4c4a1d224bd0.600x338.jpg?t=1706823201",
     category: "RPG",
     gameTrailerLink: "https://www.youtube.com/embed/Gv1jHiaHafY",
     description:
@@ -218,13 +194,14 @@ const gameList = [
     procReq: "4 GHz",
     memReq: "8 GB RAM",
     rating: 4.6,
-  },{
+  },
+  {
     name: "GTA V",
     oldPrice: 69.99,
     discountPercentage: 10,
     homePageImage:
       "https://cdn1.epicgames.com/0584d2013f0149a791e7b9bad0eec102/offer/GTAV_EGS_Artwork_1200x1600_Portrait Store Banner-1200x1600-382243057711adf80322ed2aeea42191.jpg?h=480&quality=medium&resize=1&w=360",
-    homePageImageText: "GTA V",
+    homePageImageText: "Crime,chaos,open world.",
     descBigImg: "https://4kwallpapers.com/images/walls/thumbs_3t/10738.jpg",
     descImg1:
       "https://cdn.akamai.steamstatic.com/steam/apps/271590/ss_2744f112fa060320d191a50e8b3a92441a648a56.600x338.jpg?t=1716224849",
@@ -233,7 +210,7 @@ const gameList = [
     descImg3:
       "https://cdn.akamai.steamstatic.com/steam/apps/271590/ss_32aa18ab3175e3002217862dd5917646d298ab6b.600x338.jpg?t=1716224849",
     descImg4:
-      "https://cdn.akamai.steamstatic.com/steam/apps/271590/ss_b1a1cb7959d6a0e6fcb2d06ebf97a66c9055cef3.116x65.jpg?t=1716224849",
+      "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/271590/ss_bd5db78286be0a7c6b2c62519099a9e27e6b06f3.600x338.jpg?t=1716224849",
     descImg5:
       "https://cdn.akamai.steamstatic.com/steam/apps/271590/ss_bab596ea9a6924055cd8c097bba75f052c18025d.600x338.jpg?t=1716224849",
     category: "Action",
@@ -247,18 +224,26 @@ const gameList = [
     procReq: "Processor (4 CPUs) @ 2.5GHz",
     memReq: "4 GB RAM",
     rating: 4.1,
-  },{
+  },
+  {
     name: "Assassin's Creed® Odyssey",
     oldPrice: 68.99,
     homePageImageText: "Boundless exploration awaits you",
     discountPercentage: 55,
-    homePageImage: "https://wallpapers.com/images/featured/assassins-creed-odyssey-c0l3p9wqxo2ufttc.jpg",
-    descBigImg: "https://gamingbolt.com/wp-content/uploads/2018/07/assassins-creed-odyssey.jpg",
-    descImg1: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/812140/ss_3f8f4a09fb1d69648a8c20aae19ca2924ba275bd.600x338.jpg?t=1692034673",
-    descImg2: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/812140/ss_6dc9f95cfb6d264c3535b53ce08f36ee07066550.600x338.jpg?t=1692034673",
-    descImg3: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/812140/ss_16fc551879ac299dca68839da90f89d9e624db48.600x338.jpg?t=1692034673",
-    descImg4: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/812140/ss_23039e3003448ee760030faf5e3bf8637f8d4063.600x338.jpg?t=1692034673",
-    descImg5: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/812140/ss_71f5c2052a6bfb94486e929db3d6b92c06696843.600x338.jpg?t=1692034673",
+    homePageImage:
+      "https://wallpapers.com/images/featured/assassins-creed-odyssey-c0l3p9wqxo2ufttc.jpg",
+    descBigImg:
+      "https://gamingbolt.com/wp-content/uploads/2018/07/assassins-creed-odyssey.jpg",
+    descImg1:
+      "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/812140/ss_3f8f4a09fb1d69648a8c20aae19ca2924ba275bd.600x338.jpg?t=1692034673",
+    descImg2:
+      "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/812140/ss_6dc9f95cfb6d264c3535b53ce08f36ee07066550.600x338.jpg?t=1692034673",
+    descImg3:
+      "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/812140/ss_16fc551879ac299dca68839da90f89d9e624db48.600x338.jpg?t=1692034673",
+    descImg4:
+      "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/812140/ss_23039e3003448ee760030faf5e3bf8637f8d4063.600x338.jpg?t=1692034673",
+    descImg5:
+      "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/812140/ss_71f5c2052a6bfb94486e929db3d6b92c06696843.600x338.jpg?t=1692034673",
     category: "RPG",
     gameTrailerLink: "https://www.youtube.com/embed/s_SJZSAtLBA",
     description: `Choose your fate in Assassin's Creed® Odyssey.
@@ -283,7 +268,8 @@ const gameList = [
     procReq: "Core i9 from Intel or AMD at 2.8 GHz",
     memReq: "12 GB RAM",
     rating: 4.8,
-  }, {
+  },
+  {
     name: "REMNANT II",
     oldPrice: 54.4,
     homePageImageText: "Competitive tactical shooter",
@@ -309,7 +295,8 @@ const gameList = [
     procReq: "Intel i5-10600k / AMD R5 3600",
     memReq: "16 GB RAM",
     rating: 4.4,
-  },{
+  },
+  {
     name: "Fallout 76",
     oldPrice: 28,
     homePageImageText: "Legendary warrior's journey",
@@ -342,18 +329,26 @@ const gameList = [
     procReq: "Intel Core i7-4790 3.6 GHz /AMD Ryzen 5 1500X 3.5 GHz  ",
     memReq: "8 GB RAM",
     rating: 4.5,
-  },{
+  },
+  {
     name: "Street Fighter 6",
     oldPrice: 65.3,
     homePageImageText: "Martial arts tournaments",
     discountPercentage: 15,
-    homePageImage: "https://cdn.cloudflare.steamstatic.com/steam/apps/1364780/hero_capsule.jpg?t=1716356312",
-    descBigImg: "https://preview.redd.it/sf6-survey-reward-wallpaper-upscaled-to-4k-v0-7tjn74bkj45b1.png?width=1080&crop=smart&auto=webp&s=ea79c99987a5df310e9c37ac66f8ca40139b32cf",
-    descImg1: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1364780/ss_387137f8cccb048c35a8685634372e97785d40aa.600x338.jpg?t=1716356312",
-    descImg2: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1364780/ss_a381f1b3b450c18900d47b991ce8e7456e9cdba5.600x338.jpg?t=1716356312",
-    descImg3: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1364780/ss_f62ce93269a6d8e0027853358af4d6368e2c4b93.600x338.jpg?t=1716356312",
-    descImg4: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1364780/ss_ed46aaa9ed94dd6f35a703070f8df16cee5aef61.600x338.jpg?t=1716356312",
-    descImg5: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1364780/ss_449d488d2edbe785c4e6010fede1c3b8dae8e388.600x338.jpg?t=1716356312",
+    homePageImage:
+      "https://cdn.cloudflare.steamstatic.com/steam/apps/1364780/hero_capsule.jpg?t=1716356312",
+    descBigImg:
+      "https://preview.redd.it/sf6-survey-reward-wallpaper-upscaled-to-4k-v0-7tjn74bkj45b1.png?width=1080&crop=smart&auto=webp&s=ea79c99987a5df310e9c37ac66f8ca40139b32cf",
+    descImg1:
+      "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1364780/ss_387137f8cccb048c35a8685634372e97785d40aa.600x338.jpg?t=1716356312",
+    descImg2:
+      "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1364780/ss_a381f1b3b450c18900d47b991ce8e7456e9cdba5.600x338.jpg?t=1716356312",
+    descImg3:
+      "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1364780/ss_f62ce93269a6d8e0027853358af4d6368e2c4b93.600x338.jpg?t=1716356312",
+    descImg4:
+      "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1364780/ss_ed46aaa9ed94dd6f35a703070f8df16cee5aef61.600x338.jpg?t=1716356312",
+    descImg5:
+      "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1364780/ss_449d488d2edbe785c4e6010fede1c3b8dae8e388.600x338.jpg?t=1716356312",
     category: "Action",
     gameTrailerLink: "https://www.youtube.com/embed/1INU3FOJsTw",
     description: `Here comes Capcom’s newest challenger! Street Fighter™ 6 launches worldwide on June 2nd, 2023 and represents the next evolution of the series.
@@ -369,7 +364,8 @@ const gameList = [
     procReq: "Intel Core i7 8700 / AMD Ryzen 5 3600",
     memReq: "16 GB RAM",
     rating: 4.5,
-  },{
+  },
+  {
     name: "The Elder Scrolls V",
     oldPrice: 56.4,
     homePageImageText: "Sorcerer's magical duel",
@@ -397,7 +393,8 @@ const gameList = [
     procReq: "Intel i5-2400/AMD FX-8320",
     memReq: " 8 GB RAM",
     rating: 4.8,
-  },{
+  },
+  {
     name: "Destiny 2",
     oldPrice: 76,
     homePageImageText: "Gladiator arena combat",
@@ -434,13 +431,14 @@ const gameList = [
       "Processor Intel® Core™ i5 2400 3.4 GHz or i5 7400 3.5 GHz / AMD Ryzen R5 1600X 3.6 GHz",
     memReq: " 8 GB RAM",
     rating: 4.6,
-  },{
+  },
+  {
     name: "Uncharted 4",
     oldPrice: 28.9,
     discountPercentage: 10,
     homePageImage:
       "https://cdn2.steamgriddb.com/grid/a72753a5ec2242d72f8c63a60337cc34.png",
-    homePageImageText: "Uncharted 4",
+    homePageImageText: "Seek treasure, face peril",
     descBigImg:
       "http://savegameonline.com/wp-content/uploads/2015/10/Uncharted-4-A-Thiefs-End-Game-Logo-Wallpaper.jpg",
     descImg1:
@@ -460,18 +458,26 @@ const gameList = [
     procReq: "Intel Core i7-4790 @ 3.6 GH",
     memReq: "12 GB RAM",
     rating: 4.4,
-  },{
+  },
+  {
     name: "Red Dead Redemption 2",
     oldPrice: 56.7,
     homePageImageText: "Wild West shootouts",
     discountPercentage: 15,
-    homePageImage: "https://static0.srcdn.com/wordpress/wp-content/uploads/2023/05/red-dead-redemption-2-poster.jpg",
-    descBigImg: "https://static0.gamerantimages.com/wordpress/wp-content/uploads/2024/01/red-dead-redemption-2-1899-game-rant-1-1.jpg",
-    descImg1: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1174180/ss_66b553f4c209476d3e4ce25fa4714002cc914c4f.600x338.jpg?t=1714055653",
-    descImg2: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1174180/ss_bac60bacbf5da8945103648c08d27d5e202444ca.600x338.jpg?t=1714055653",
-    descImg3: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1174180/ss_668dafe477743f8b50b818d5bbfcec669e9ba93e.600x338.jpg?t=1714055653",
-    descImg4: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1174180/ss_4ce07ae360b166f0f650e9a895a3b4b7bf15e34f.600x338.jpg?t=1714055653",
-    descImg5: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1174180/ss_d1a8f5a69155c3186c65d1da90491fcfd43663d9.600x338.jpg?t=1714055653",
+    homePageImage:
+      "https://static0.srcdn.com/wordpress/wp-content/uploads/2023/05/red-dead-redemption-2-poster.jpg",
+    descBigImg:
+      "https://static0.gamerantimages.com/wordpress/wp-content/uploads/2024/01/red-dead-redemption-2-1899-game-rant-1-1.jpg",
+    descImg1:
+      "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1174180/ss_66b553f4c209476d3e4ce25fa4714002cc914c4f.600x338.jpg?t=1714055653",
+    descImg2:
+      "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1174180/ss_bac60bacbf5da8945103648c08d27d5e202444ca.600x338.jpg?t=1714055653",
+    descImg3:
+      "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1174180/ss_668dafe477743f8b50b818d5bbfcec669e9ba93e.600x338.jpg?t=1714055653",
+    descImg4:
+      "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1174180/ss_4ce07ae360b166f0f650e9a895a3b4b7bf15e34f.600x338.jpg?t=1714055653",
+    descImg5:
+      "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1174180/ss_d1a8f5a69155c3186c65d1da90491fcfd43663d9.600x338.jpg?t=1714055653",
     category: "Adventure",
     gameTrailerLink: "https://www.youtube.com/embed/eaW0tYpxyp0",
     description: `America, 1899.
@@ -493,8 +499,9 @@ const gameList = [
     name: "Need For Speed",
     oldPrice: 44.5,
     discountPercentage: 25,
-    homePageImage: "https://cdna.artstation.com/p/assets/images/images/023/322/446/large/agentough-nfsh-extended-fan-02.jpg?1578846616",
-    homePageImageText: "Need For Speed",
+    homePageImage:
+      "https://cdna.artstation.com/p/assets/images/images/023/322/446/large/agentough-nfsh-extended-fan-02.jpg?1578846616",
+    homePageImageText: "Race,customize,dominate streets.",
     descBigImg: "https://4kwallpapers.com/images/walls/thumbs_3t/2723.jpg",
     descImg1:
       "https://cdn.akamai.steamstatic.com/steam/apps/1262560/ss_9793d77282f58a643e6b5ecbf082e83638a8edc3.600x338.jpg?t=1605151411",
@@ -523,18 +530,26 @@ const gameList = [
     procReq: "2 GHz Dual Core (Core 2 Duo 2.4 GHZ or Althon X2 2.7 GHz)",
     memReq: " 2 GB RAM",
     rating: 4.3,
-  },  {
+  },
+  {
     name: "Dota 2",
     oldPrice: 23.99,
     homePageImageText: "Classic arcade battles",
     discountPercentage: 23,
-    homePageImage: "https://wallpapers.com/images/hd/dota-2-4k-heroes-btzdsybycekhcwf6.jpg",
-    descBigImg: "https://dotawallpapers.com/wallpaper/dotawallpapers.com-dota-2-girls-fan-wallpaper-4k-4299-3840x2160.jpg",
-    descImg1: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/570/ss_ad8eee787704745ccdecdfde3a5cd2733704898d.600x338.jpg?t=1714502360",
-    descImg2: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/570/ss_7ab506679d42bfc0c0e40639887176494e0466d9.600x338.jpg?t=1714502360",
-    descImg3: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/570/ss_c9118375a2400278590f29a3537769c986ef6e39.600x338.jpg?t=1714502360",
-    descImg4: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/570/ss_f9ebafedaf2d5cfb80ef1f74baa18eb08cad6494.600x338.jpg?t=1714502360",
-    descImg5: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/570/ss_86d675fdc73ba10462abb8f5ece7791c5047072c.600x338.jpg?t=1714502360",
+    homePageImage:
+      "https://wallpapers.com/images/hd/dota-2-4k-heroes-btzdsybycekhcwf6.jpg",
+    descBigImg:
+      "https://dotawallpapers.com/wallpaper/dotawallpapers.com-dota-2-girls-fan-wallpaper-4k-4299-3840x2160.jpg",
+    descImg1:
+      "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/570/ss_ad8eee787704745ccdecdfde3a5cd2733704898d.600x338.jpg?t=1714502360",
+    descImg2:
+      "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/570/ss_7ab506679d42bfc0c0e40639887176494e0466d9.600x338.jpg?t=1714502360",
+    descImg3:
+      "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/570/ss_c9118375a2400278590f29a3537769c986ef6e39.600x338.jpg?t=1714502360",
+    descImg4:
+      "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/570/ss_f9ebafedaf2d5cfb80ef1f74baa18eb08cad6494.600x338.jpg?t=1714502360",
+    descImg5:
+      "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/570/ss_86d675fdc73ba10462abb8f5ece7791c5047072c.600x338.jpg?t=1714502360",
     category: "Fantasy",
     gameTrailerLink: "https://www.youtube.com/embed/LV1ZV_DG3kI",
     description: `The most-played game on Steam.
@@ -555,7 +570,8 @@ const gameList = [
     procReq: "Dual core from Intel or AMD at 2.8 GHz",
     memReq: "4 GB RAM",
     rating: 4.1,
-  }, {
+  },
+  {
     name: "Cyberpunk 2077",
 
     oldPrice: 63.6,
@@ -588,19 +604,26 @@ const gameList = [
     procReq: "Intel Core i7-12700 or AMD Ryzen 7 7800X3D",
     memReq: "16 GB RAM",
     rating: 4.6,
-  },  
+  },
   {
     name: "Call of Duty",
     oldPrice: 49.67,
     homePageImageText: "Gunfight showdown thrills",
     discountPercentage: 55,
-    homePageImage: "https://4kwallpapers.com/images/wallpapers/price-call-of-duty-3840x2160-12666.jpg",
-    descBigImg: "https://4kwallpapers.com/images/wallpapers/price-call-of-duty-3840x2160-12666.jpg",
-    descImg1: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1938090/ss_b89cdd1e32c9e19d1571589faaa9db8ef3ff6a22.600x338.jpg?t=1712591572",
-    descImg2: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1938090/ss_1fb36c858971c163a14a466049835bfbb98a3ebf.600x338.jpg?t=1712591572",
-    descImg3: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1938090/ss_0655666903851c360dfafa25141d8e5101d263c5.600x338.jpg?t=1712591572",
-    descImg4: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1938090/ss_c372c7f694bb699fc08802cb32d6ee59e21b9cf4.600x338.jpg?t=1712591572",
-    descImg5: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1938090/ss_4b82b6138a5a79606d363df220481fdd7826f125.600x338.jpg?t=1712591572",
+    homePageImage:
+      "https://4kwallpapers.com/images/wallpapers/price-call-of-duty-3840x2160-12666.jpg",
+    descBigImg:
+      "https://4kwallpapers.com/images/wallpapers/price-call-of-duty-3840x2160-12666.jpg",
+    descImg1:
+      "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1938090/ss_b89cdd1e32c9e19d1571589faaa9db8ef3ff6a22.600x338.jpg?t=1712591572",
+    descImg2:
+      "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1938090/ss_1fb36c858971c163a14a466049835bfbb98a3ebf.600x338.jpg?t=1712591572",
+    descImg3:
+      "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1938090/ss_0655666903851c360dfafa25141d8e5101d263c5.600x338.jpg?t=1712591572",
+    descImg4:
+      "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1938090/ss_c372c7f694bb699fc08802cb32d6ee59e21b9cf4.600x338.jpg?t=1712591572",
+    descImg5:
+      "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1938090/ss_4b82b6138a5a79606d363df220481fdd7826f125.600x338.jpg?t=1712591572",
     category: "Shooting",
     gameTrailerLink: "https://www.youtube.com/embed/ztjfwecrY8E",
     description: `Call of Duty® HQ supports Call of Duty®: Modern Warfare® III, Call of Duty®: Modern Warfare® II and Call of Duty®: Warzone™.
@@ -618,7 +641,8 @@ const gameList = [
     procReq: "Intel i9 or AMD at 2.8 GHz",
     memReq: "12 GB RAM",
     rating: 4.4,
-  },{
+  },
+  {
     name: "Hogwarts Legacy",
     oldPrice: "65.32",
     discountPercentage: "20",
@@ -652,13 +676,16 @@ const gameList = [
     procReq: "Intel® Core™ i5-4670K @4.4 GHz",
     memReq: "8 GB RAM",
     rating: 4.7,
-  }, {
+  },
+  {
     name: "Spider-Man: Miles Morales",
     oldPrice: "45.6",
     discountPercentage: "12",
-    homePageImage: "https://image.api.playstation.com/vulcan/ap/rnd/202008/1420/HcLcfeQBXd2RiQaCeWQDCIFN.jpg",
+    homePageImage:
+      "https://image.api.playstation.com/vulcan/ap/rnd/202008/1420/HcLcfeQBXd2RiQaCeWQDCIFN.jpg",
     homePageImageText: "Web-Slinging Heroism",
-    descBigImg: "https://image.api.playstation.com/vulcan/ap/rnd/202008/1420/HcLcfeQBXd2RiQaCeWQDCIFN.jpg",
+    descBigImg:
+      "https://image.api.playstation.com/vulcan/ap/rnd/202008/1420/HcLcfeQBXd2RiQaCeWQDCIFN.jpg",
     descImg1:
       "https://images.greenmangaming.com/1cb77fddce164ad7933941acdba47d01/644598a39d8a4f17a3ba3dc0b6453531.jpg",
     descImg2:
@@ -686,7 +713,8 @@ const gameList = [
     procReq: "Intel® Core™ i5-3170K @3.1 GHz",
     memReq: "8 GB RAM",
     rating: 4.3,
-  },{
+  },
+  {
     name: "Elden Ring",
     oldPrice: "34.5",
     discountPercentage: "15",
@@ -718,12 +746,13 @@ const gameList = [
     procReq: "Intel® Core™ i9-4670K @3.4 GHz",
     memReq: "12 GB RAM",
     rating: 4.1,
-  },{
+  },
+  {
     name: "Horizon Forbidd West",
     oldPrice: "30.8",
     discountPercentage: "5",
     homePageImage: "https://wallpapercave.com/wp/wp10665434.jpg",
-    homePageImageText: "Horizon Forbidd West",
+    homePageImageText: "Machines and tribes clash",
     descBigImg: "https://4kwallpapers.com/images/walls/thumbs_3t/7342.jpeg",
     descImg1:
       "https://geekculture.co/wp-content/uploads/2021/05/horizon-forbidden-west-2021-tremortusk.jpg",
@@ -745,14 +774,16 @@ const gameList = [
     sysReq: "Windows® 11 64-bit",
     procReq: "Intel® Core™ i5-4670K @3.4 GHz ",
     memReq: "12 GB RAM",
-  },{
+  },
+  {
     name: "FarCry New DAWN",
     oldPrice: 56.8,
     discountPercentage: 20,
     homePageImage:
       "https://assets-cdn.workingnotworking.com/dyo7jsb15dwqnwu12wc57cjiy57e",
-    homePageImageText: "FarCry New DAWN",
-    descBigImg: "https://wallpapers.com/images/featured/far-cry-new-dawn-siqyefonw4ftsng5.jpg",
+    homePageImageText: "Post-apocalyptic chaos",
+    descBigImg:
+      "https://wallpapers.com/images/featured/far-cry-new-dawn-siqyefonw4ftsng5.jpg",
     descImg1:
       "https://cdn.akamai.steamstatic.com/steam/apps/939960/ss_7a80ba40c596387f98ab6ae7438e8739cd4fe586.600x338.jpg?t=1694554850",
     descImg2:
@@ -779,14 +810,16 @@ const gameList = [
     procReq: "Intel Core i7-4790 @ 3.6 GHz",
     memReq: "8 GB RAM",
     rating: 4.4,
-  },  {
+  },
+  {
     name: "Spider-Man Remastered",
     oldPrice: "33.53",
     discountPercentage: "10",
-    homePageImage:
-      "https://image.api.playstation.com/vulcan/ap/rnd/202009/3021/BtsjAgHT9pqHRXtN9FCk7xc8.png",
-    homePageImageText: "Spider-Man Remastered",
-    descBigImg: "https://image.api.playstation.com/vulcan/ap/rnd/202009/3021/SfK6snCLSX4qRfmIVQXrYXJK.png",
+    homePageImage:"https://image.api.playstation.com/vulcan/ap/rnd/202009/3021/BtsjAgHT9pqHRXtN9FCk7xc8.png",
+      
+    homePageImageText: "Enhanced Graphics,Thrillling Action",
+    descBigImg:
+      "https://image.api.playstation.com/vulcan/ap/rnd/202009/3021/SfK6snCLSX4qRfmIVQXrYXJK.png",
     descImg1:
       "https://images.greenmangaming.com/d73a144f643842aa876e142eeffc8081/fc465529c45f421b8c8b20486fe15371.jpg",
     descImg2:
@@ -815,7 +848,8 @@ const gameList = [
     procReq: "Intel® Core™ i9-3170K @3.1 GHz",
     memReq: "12 GB RAM",
     rating: 4.1,
-  }, {
+  },
+  {
     name: "PUBG: BATTLEGROUNDS",
     oldPrice: 32.8,
     homePageImageText: "Futuristic warzone battles",
@@ -845,7 +879,8 @@ const gameList = [
     procReq: "Intel Core i5-6600K / AMD Ryzen 5 1600",
     memReq: "16 GB RAM",
     rating: 4.3,
-  },  {
+  },
+  {
     name: "Warframe",
     oldPrice: 43.4,
     homePageImageText: "Mythical creature encounters",
@@ -874,18 +909,26 @@ const gameList = [
       "Intel Core i7 860, Intel Core i5 750, or AMD FX-4100 (SSE 4.2 support required)",
     memReq: "4 GB RAM",
     rating: 4.3,
-  },{
+  },
+  {
     name: "Apex Legends",
     oldPrice: 54.5,
     homePageImageText: "Explosive firefight action",
     discountPercentage: 10,
-    homePageImage: "https://i.pinimg.com/originals/a1/6e/f6/a16ef66d0f1c574546ebe7884761da88.jpg",
-    descBigImg: "https://preview.redd.it/s6pti85u9cy41.jpg?width=1080&crop=smart&auto=webp&s=37952123b35bd84451640cef909094fd30e14dda",
-    descImg1: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1172470/ss_79e83c3315559cd5b041a15107e6d4f55bfee3c9.600x338.jpg?t=1715104113",
-    descImg2: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1172470/ss_d53225454ae9d7ee0267a2e40ede8e14658f26fd.600x338.jpg?t=1715104113",
-    descImg3: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1172470/ss_954aca77a7473d9e13ee15114ab8e4d49b1efc0e.600x338.jpg?t=1715104113",
-    descImg4: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1172470/ss_63b61fceb46fd7c7ff5834ad9a0cfdb037433920.600x338.jpg?t=1715104113",
-    descImg5: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1172470/ss_a9cca163111b21bb8591ae9bea6c0b62aca30e6e.600x338.jpg?t=1715104113",
+    homePageImage:
+      "https://i.pinimg.com/originals/a1/6e/f6/a16ef66d0f1c574546ebe7884761da88.jpg",
+    descBigImg:
+      "https://preview.redd.it/s6pti85u9cy41.jpg?width=1080&crop=smart&auto=webp&s=37952123b35bd84451640cef909094fd30e14dda",
+    descImg1:
+      "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1172470/ss_79e83c3315559cd5b041a15107e6d4f55bfee3c9.600x338.jpg?t=1715104113",
+    descImg2:
+      "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1172470/ss_d53225454ae9d7ee0267a2e40ede8e14658f26fd.600x338.jpg?t=1715104113",
+    descImg3:
+      "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1172470/ss_954aca77a7473d9e13ee15114ab8e4d49b1efc0e.600x338.jpg?t=1715104113",
+    descImg4:
+      "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1172470/ss_63b61fceb46fd7c7ff5834ad9a0cfdb037433920.600x338.jpg?t=1715104113",
+    descImg5:
+      "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1172470/ss_a9cca163111b21bb8591ae9bea6c0b62aca30e6e.600x338.jpg?t=1715104113",
     category: "Shooting",
     gameTrailerLink: "https://www.youtube.com/embed/oQtHENM_GZU",
     description: `Conquer with character in Apex Legends, a free-to-play* Hero shooter where legendary characters with powerful abilities team up to battle for fame & fortune on the fringes of the Frontier.
@@ -895,7 +938,8 @@ const gameList = [
     procReq: "AMD FX 4350 or Equivalent, Intel Core i3 6300 or Equivalent",
     memReq: "8 GB RAM",
     rating: 4.3,
-  },  {
+  },
+  {
     name: "Palworld",
     oldPrice: 12.44,
     homePageImageText: "Treasure hunting escapade",
@@ -929,7 +973,7 @@ const gameList = [
     oldPrice: 34.56,
     discountPercentage: 10,
     homePageImage: "https://4kwallpapers.com/images/walls/thumbs_3t/13667.jpg",
-    homePageImageText: "God of War",
+    homePageImageText: "God of War battles",
     descBigImg: "https://4kwallpapers.com/images/walls/thumbs_3t/8636.jpg",
     descImg1:
       "https://images.greenmangaming.com/641c0b3618294c988e39cb275dc73c38/0717f1d29b504999b61d3eb86a3296a6.jpg",
@@ -959,20 +1003,14 @@ const gameList = [
     memReq: "8 GB RAM",
     rating: 4.8,
   },
-  
-  
-  
 
-  
-
-  
   {
     name: "FINAL FANTASY VII",
     oldPrice: "23.4",
     discountPercentage: "12",
     homePageImage:
       "https://gh.cdn.sewest.net/assets/ident/pulse/a218ace0/FFVIIRINTERGRADE_Available_Now-1vq9ttoa5.jpg?quality=65",
-    homePageImageText: "FINAL FANTASY VII",
+    homePageImageText: "Unforgettable Adventure",
     descBigImg:
       "https://gh.cdn.sewest.net/assets/ident/pulse/a218ace0/FFVIIRINTERGRADE_Available_Now-1vq9ttoa5.jpg?quality=65",
     descImg1:
@@ -995,7 +1033,7 @@ const gameList = [
     memReq: "8 GB RAM",
     rating: 4.5,
   },
- 
+
   {
     name: "Counter-Strike 2",
     oldPrice: 32.5,
@@ -1028,29 +1066,25 @@ const gameList = [
     rating: 4.7,
   },
 
-  
- 
-  
-
-
-  
-  
-  
-
-  
-  
   {
     name: "Monster Hunter: World",
     oldPrice: 45.67,
     homePageImageText: "Frontier justice adventures",
     discountPercentage: 55,
-    homePageImage: "https://wallpapers.com/images/hd/monster-hunter-phone-6p0mp8g3jjsy583l.jpg",
-    descBigImg: "https://wallpapers.com/images/featured/monster-hunter-world-tbe0vlyb55q790lw.jpg",
-    descImg1: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/582010/ss_25902a9ae6977d6d10ebff20b87e8739e51c5b8b.600x338.jpg?t=1711328912",
-    descImg2: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/582010/ss_681cc5358ec55a997aee9f757ffe8b418dc79a32.600x338.jpg?t=1711328912",
-    descImg3: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/582010/ss_6d26868b45c20bf4dd5f75f31264aca08ce17217.600x338.jpg?t=1711328912",
-    descImg4: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/582010/ss_a262c53b8629de7c6547933dc0b49d31f4e1b1f1.600x338.jpg?t=1711328912",
-    descImg5: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/582010/ss_ce69dc57e6e442c73d874f1b701f2e4af405fb19.600x338.jpg?t=1711328912",
+    homePageImage:
+      "https://wallpapers.com/images/hd/monster-hunter-phone-6p0mp8g3jjsy583l.jpg",
+    descBigImg:
+      "https://wallpapers.com/images/featured/monster-hunter-world-tbe0vlyb55q790lw.jpg",
+    descImg1:
+      "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/582010/ss_25902a9ae6977d6d10ebff20b87e8739e51c5b8b.600x338.jpg?t=1711328912",
+    descImg2:
+      "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/582010/ss_681cc5358ec55a997aee9f757ffe8b418dc79a32.600x338.jpg?t=1711328912",
+    descImg3:
+      "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/582010/ss_6d26868b45c20bf4dd5f75f31264aca08ce17217.600x338.jpg?t=1711328912",
+    descImg4:
+      "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/582010/ss_a262c53b8629de7c6547933dc0b49d31f4e1b1f1.600x338.jpg?t=1711328912",
+    descImg5:
+      "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/582010/ss_ce69dc57e6e442c73d874f1b701f2e4af405fb19.600x338.jpg?t=1711328912",
     category: "Fantasy",
     gameTrailerLink: "https://www.youtube.com/embed/OotQrKEqe94",
     description: `Welcome to a new world! Take on the role of a hunter and slay ferocious monsters in a living, breathing ecosystem where you can use the landscape and its diverse inhabitants to get the upper hand. Hunt alone or in co-op with up to three other players, and use materials collected from fallen foes to craft new gear and take on even bigger, badder beasts!
@@ -1068,11 +1102,9 @@ const gameList = [
     memReq: "4 GB RAM",
     rating: 4.4,
   },
- 
+
   // Add more game objects here
 ];
-
-
 
 gameList.forEach((game) => {
   const discountAmount = (game.oldPrice * game.discountPercentage) / 100;
@@ -1088,4 +1120,4 @@ const addGames = async (gameList) => {
 };
 
 // Call the function to add games
-addGames(gameList);
+// addGames(gameList);

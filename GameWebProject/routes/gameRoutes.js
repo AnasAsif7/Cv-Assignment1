@@ -176,7 +176,11 @@ router.get("/add-game", isAdmin, (req, res) => {
 
 // Create new game (Admin only)
 router.post("/games", isAdmin, async (req, res) => {
-  const { name, newPrice, oldPrice, homePageImageText, discountPercentage, homePageImage, descBigImg, descImg1, descImg2, descImg3, descImg4, descImg5, category, gameTrailerLink, description, sysReq, procReq, memReq, rating } = req.body;
+  const { name, oldPrice, homePageImageText, discountPercentage, homePageImage, descBigImg, descImg1, descImg2, descImg3, descImg4, descImg5, category, gameTrailerLink, description, sysReq, procReq, memReq, rating } = req.body;
+  
+  // Calculate the new price
+  const newPrice = oldPrice - (oldPrice * (discountPercentage / 100)).toFixed(2);
+
   try {
     const game = new Game({ name, newPrice, oldPrice, homePageImageText, discountPercentage, homePageImage, descBigImg, descImg1, descImg2, descImg3, descImg4, descImg5, category, gameTrailerLink, description, sysReq, procReq, memReq, rating });
     await game.save();
@@ -186,5 +190,6 @@ router.post("/games", isAdmin, async (req, res) => {
     res.status(500).send("Server Error");
   }
 });
+
 
 module.exports = router;

@@ -169,13 +169,20 @@
         $(".update-game").click(function () {
           const row = $(this).closest("tr");
           const id = row.data("id");
+      
+          const oldPrice = parseFloat(row.find("input").eq(1).val());
+          const discountPercentage = parseFloat(row.find("input").eq(2).val());
+          const newPrice = oldPrice - (oldPrice * (discountPercentage / 100)).toFixed(2); 
+      
           const updatedData = {
             name: row.find("input").eq(0).val(),
-            oldPrice: row.find("input").eq(1).val(),
-            discountPercentage: row.find("input").eq(2).val(),
+            oldPrice: oldPrice,
+            discountPercentage: discountPercentage,
+            newPrice: newPrice,
             descBigImg: row.find("input").eq(3).val(),
             category: row.find("input").eq(4).val(),
           };
+      
           $.ajax({
             url: `/game/${id}`,
             method: "PUT",
@@ -189,7 +196,6 @@
             },
           });
         });
-
         // Delete game
         $(".delete-game").click(function () {
           const id = $(this).closest("tr").data("id");
