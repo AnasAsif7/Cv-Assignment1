@@ -43,6 +43,28 @@
 
 // module.exports = sessionAuth;
 
+// async function sessionAuth(req, res, next) {
+//   if (!req.session) {
+//     return next(new Error('Session middleware not configured correctly'));
+//   }
+  
+//   res.locals.user = req.session.user || null;
+//   res.locals.isAdmin = req.session.user ? req.session.user.isAdmin : false;
+
+//   req.flash = function (type, message) {
+//     req.session.flash = { type, message };
+//   };
+
+//   if (req.session.flash) {
+//     res.locals.flash = req.session.flash;
+//     req.session.flash = null;
+//   }
+  
+//   next();
+// }
+
+// module.exports = sessionAuth;
+
 async function sessionAuth(req, res, next) {
   if (!req.session) {
     return next(new Error('Session middleware not configured correctly'));
@@ -51,14 +73,10 @@ async function sessionAuth(req, res, next) {
   res.locals.user = req.session.user || null;
   res.locals.isAdmin = req.session.user ? req.session.user.isAdmin : false;
 
-  req.flash = function (type, message) {
-    req.session.flash = { type, message };
-  };
+  // Remove custom flash message handling
+  // req.flash function will now be the one provided by connect-flash
 
-  if (req.session.flash) {
-    res.locals.flash = req.session.flash;
-    req.session.flash = null;
-  }
+  // Don't handle req.session.flash here; let connect-flash manage it
   
   next();
 }
