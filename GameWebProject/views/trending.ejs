@@ -1,12 +1,12 @@
 <% trending.forEach(function(trend) { %>
-  <div class="col-lg-3 col-md-6 col-sm-12">
-    <a href="/game/<%= trend._id %>">
+<div class="col-lg-3 col-md-6 col-sm-12">
+  <a href="/game/<%= trend._id %>">
     <div class="vertical-image-container">
       <div class="vertical-image-overlay">
         <div class="image-text2"><%= trend.name %></div>
       </div>
-      <img src="<%= trend.homePageImage %>" alt="<%= trend.name %>">
+      <img src="<%= trend.homePageImage %>" alt="<%= trend.name %>" />
     </div>
-    </a>
-  </div>
+  </a>
+</div>
 <% }); %>

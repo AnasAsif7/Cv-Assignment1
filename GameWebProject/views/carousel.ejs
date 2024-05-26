@@ -1,16 +1,31 @@
-<div id="gameCarousel" class="carousel slide" data-bs-ride="carousel" style="z-index:-233333;">
+<div
+  id="gameCarousel"
+  class="carousel slide"
+  data-bs-ride="carousel"
+  style="z-index: -233333"
+>
   <div class="carousel-inner">
     <% images.forEach(function(image, index) { %>
-      <div class="carousel-item <%= index === 0 ? 'active' : '' %>">
-        <img src="<%= image %>" class="d-block w-100" alt="Game Image">
-      </div>
+    <div class="carousel-item <%= index === 0 ? 'active' : '' %>">
+      <img src="<%= image %>" class="d-block w-100" alt="Game Image" />
+    </div>
     <% }); %>
   </div>
-  <a class="carousel-control-prev" href="#gameCarousel" role="button" data-bs-slide="prev">
+  <a
+    class="carousel-control-prev"
+    href="#gameCarousel"
+    role="button"
+    data-bs-slide="prev"
+  >
     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
     <span class="sr-only">Previous</span>
   </a>
-  <a class="carousel-control-next" href="#gameCarousel" role="button" data-bs-slide="next">
+  <a
+    class="carousel-control-next"
+    href="#gameCarousel"
+    role="button"
+    data-bs-slide="next"
+  >
     <span class="carousel-control-next-icon" aria-hidden="true"></span>
     <span class="sr-only">Next</span>
   </a>

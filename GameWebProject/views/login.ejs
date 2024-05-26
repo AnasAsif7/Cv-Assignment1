@@ -26,16 +26,15 @@
         <h2 class="mb-4">Login</h2>
 
         <div id="error-msg-container" class="alert alert-danger" role="alert">
-          <%= error_msg %>
+          <%= locals.error_msg %>
         </div>
         <div
           id="success-msg-container"
           class="alert alert-success"
           role="alert"
         >
-          <%= success_msg %>
+          <%= locals.success_msg %>
         </div>
-        
 
         <form id="loginForm" method="POST" action="/login">
           <div class="form-group">
@@ -72,18 +71,18 @@
     </div>
 
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script>
-        $(document).ready(function () {
-          // Display the error message if it has content
-          if ($("#error-msg-container").text().trim().length > 0) {
-            $("#error-msg-container").show();
-          }
-      
-          // Display the success message if it has content
-          if ($("#success-msg-container").text().trim().length > 0) {
-            $("#success-msg-container").show();
-          }
-        });
-      </script>
+   <script>
+  $(document).ready(function () {
+    // Display the error message if it has content
+    if ($("#error-msg-container").text().trim().length > 0) {
+      $("#error-msg-container").show();
+    }
+
+    // Display the success message if it has content
+    if ($("#success-msg-container").text().trim().length > 0) {
+      $("#success-msg-container").show();
+    }
+  });
+</script>
   </body>
 </html>
