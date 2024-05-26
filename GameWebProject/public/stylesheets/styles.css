@@ -860,11 +860,12 @@ a:hover {
   border: none !important;
   transition: color 0.3s ease, transform 0.3s ease !important;
   will-change: color, transform !important;
+  font-size: 2em;
 }
 
 .btn-total-price:hover {
   color: #ffcc00 !important;
-  transform: scale(1.03) !important;
+  transform: scale(1.07) !important;
 }
 
 .btn-quantity-increase {

@@ -5,7 +5,7 @@
 // const app = express();
 // const expressLayouts = require('express-ejs-layouts');
 // app.use(expressLayouts);
-// app.set('layout', 'layouts/layout'); 
+// app.set('layout', 'layouts/layout');
 // // Add game to cart route
 // router.post("/add-cart/:id", checkSessionAuth, async (req, res) => {
 //   const userId = req.session.user._id;
@@ -95,6 +95,15 @@ const express = require("express");
 const router = express.Router();
 const checkSessionAuth = require("../middleware/checkSessionAuth");
 const Game = require("../models/Game");
+const flash = require("connect-flash");
+
+router.use(flash());
+router.use((req, res, next) => {
+  res.locals.success_msg = req.flash("success_msg");
+  res.locals.error_msg = req.flash("error_msg");
+  res.locals.error = req.flash("error");
+  next();
+});
 
 // Add game to cart route
 router.post("/add-cart/:id", checkSessionAuth, async (req, res) => {
@@ -178,5 +187,20 @@ router.get("/cart", checkSessionAuth, async (req, res) => {
 
   res.render("cart", { games, total });
 });
+router.post('/checkout', checkSessionAuth, (req, res) => {
+  const userId = req.session.user._id;
+  
+  // Clear the cart in the session
+  req.session.cart = [];
 
+  // Clear the cart cookie
+  res.cookie(`cart_${userId}`, [], {
+    httpOnly: true,
+    maxAge: 24 * 60 * 60 * 1000,
+  });
+
+ 
+  
+  res.redirect('/cart');
+});
 module.exports = router;

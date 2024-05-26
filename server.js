@@ -44,10 +44,11 @@ app.use(
     cookie: { secure: false }, // Set secure: true if you are using https
   })
 );
-app.use(sessionAuth);
+app.use(flash());
+
 
 // Connect flash middleware
-app.use(flash());
+
 
 app.use((req, res, next) => {
   res.locals.success_msg = req.flash("success_msg");
@@ -55,6 +56,13 @@ app.use((req, res, next) => {
   res.locals.error = req.flash("error");
   next();
 });
+app.use((req, res, next) => {
+  console.log("Session Data:", req.session); // Check session content
+  // Instead of clearing the flash, just peek into the session data
+  console.log("Flash Messages:", req.session.flash);
+  next();
+});
+
 
 // Middleware to load cart from cookies
 app.use((req, res, next) => {
@@ -73,13 +81,15 @@ mongoose
   })
   .then(() => console.log("MongoDB connected"))
   .catch((err) => console.log(err));
-
+  
 // Use routes
+
+// app.use(sessionAuth);
 app.use("/", authRoutes);
 app.use("/", gameRoutes);
 app.use("/", cartRoutes);
 app.use("/", contactRoutes);
-
+app.use(sessionAuth);
 // Static routes
 app.get("/contact", (req, res) => {
   res.render("ContactUs");
@@ -114,6 +124,13 @@ app.get("/search-query", async (req, res) => {
   } catch (err) {
     res.status(500).send("Server Error");
   }
+});app.post('/checkout', (req, res) => {
+  // Logic to clear the cart
+  req.session.cart = [];
+  
+  // Send an alert indicating purchase is complete
+  req.flash('success_msg', 'Purchase completed successfully.');
+  res.redirect('/cart');
 });
 
 // Start the server

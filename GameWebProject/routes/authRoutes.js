@@ -84,6 +84,7 @@ const router = express.Router();
 const bcrypt = require("bcryptjs");
 const User = require("../models/User");
 
+
 // Signup route
 router.get("/signup", (req, res) => {
   res.render("signup");
@@ -117,24 +118,53 @@ router.get("/login", (req, res) => {
   res.render("login");
 });
 
+// router.post("/login", async (req, res) => {
+//   const { email, password } = req.body;
+//   try {
+//     const user = await User.findOne({ email });
+//     if (!user) {
+//       req.flash("error_msg", "Invalid email or password.");
+//       return res.redirect("/login");
+//     }
+
+//     const validPassword = await bcrypt.compare(password, user.password);
+//     if (!validPassword) {
+//       req.flash("error_msg", "Invalid email or password.");
+//       return res.redirect("/login");
+//     }
+
+//     req.session.user = user;
+//     req.session.cart = req.cookies[`cart_${user._id}`] || [];
+//     console.log("Session set:", req.session.user); // Debugging log
+//     req.flash("success_msg", "Logged in Successfully");
+//     res.redirect("/");
+//   } catch (err) {
+//     console.error("Error during login:", err);
+//     req.flash("error_msg", "Server Error");
+//     res.redirect("/login");
+//   }
+// });
+
 router.post("/login", async (req, res) => {
   const { email, password } = req.body;
   try {
     const user = await User.findOne({ email });
     if (!user) {
+      console.log("No user found for email:", email);
       req.flash("error_msg", "Invalid email or password.");
       return res.redirect("/login");
     }
-
     const validPassword = await bcrypt.compare(password, user.password);
     if (!validPassword) {
+      console.log("Password does not match");
       req.flash("error_msg", "Invalid email or password.");
+     
+
       return res.redirect("/login");
     }
 
     req.session.user = user;
     req.session.cart = req.cookies[`cart_${user._id}`] || [];
-    console.log("Session set:", req.session.user); // Debugging log
     req.flash("success_msg", "Logged in Successfully");
     res.redirect("/");
   } catch (err) {
@@ -143,6 +173,7 @@ router.post("/login", async (req, res) => {
     res.redirect("/login");
   }
 });
+
 
 // Logout route
 router.get("/logout", (req, res) => {
