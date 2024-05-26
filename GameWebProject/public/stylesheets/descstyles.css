@@ -5,7 +5,7 @@ body {
   }
   
   .game-container {
-    max-width: 1250px;
+    max-width: 1280px;
     margin: 0 auto;
     padding: 20px;
   }
@@ -54,6 +54,7 @@ body {
     padding: 10px 20px;
     border-radius: 10px;
     transition: transform 0.3s;
+    font-family: Arial, sans-serif!important;
   }
   
   .game-info:hover {
@@ -140,7 +141,7 @@ body {
   }
   
   .thumbnail {
-    margin-top: 50px;
+    margin-top: 10px;
     width: 155px;
     height: 235px;
     object-fit: cover;

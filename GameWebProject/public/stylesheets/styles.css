@@ -666,6 +666,8 @@ body {
 }
 
 .carousel-item {
+  margin-top: 0 !important;
+  padding-top: 0 !important;
   height: 550px !important; 
 }
 
@@ -947,8 +949,6 @@ a:hover {
   background-color: #013369; /* Darker blue on hover */
   transform: scale(1.05); /* Slightly enlarge on hover */
 }
-
-
 
 
 
