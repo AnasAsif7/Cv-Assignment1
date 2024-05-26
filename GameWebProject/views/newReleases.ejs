@@ -1,0 +1,12 @@
+<% newReleases.forEach(function(release) { %>
+  <div class="col-lg-4 col-md-6 col-sm-12">
+    <a href="/game/<%= release._id %>">
+    <div class="image-container">
+      <div class="image-overlay">
+        <div class="image-text"><%= release.homePageImageText %></div>
+      </div>
+      <img src="<%= release.descBigImg %>" alt="<%= release.name %>">
+    </div>
+    </a>
+  </div>
+<% }); %>

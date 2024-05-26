@@ -1,0 +1,80 @@
+body {
+    background-color: #121212; 
+    color: #fff; 
+}
+
+.container {
+    max-width: 600px;
+    background-color: #222;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    margin-top: 50px;
+    margin-bottom: 20px; 
+}
+.form-control {
+    background-color: rgba(38, 36, 36, 0.5); 
+    border: 1px solid #282828;
+    color: #fff;
+    border-radius: 20px;
+}
+
+
+.form-control:focus {
+    background-color: rgba(0, 0, 0, 0.5); 
+    border-color: #7a55ff; 
+    box-shadow: 0 0 5px rgba(122, 85, 255, 1); 
+}
+
+
+
+.btn-outline-success {
+    color:#4e2dc6 ;
+    border: none;
+    box-shadow: 0 0 10px #7a55ff; 
+    width: 200px;
+    border-radius: 20px;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease; 
+}
+.btn-outline-success:hover {
+    background-color: #7a55ff; 
+    box-shadow: 0 0 5px #643fed; 
+}
+
+label {
+    color: #ccc;
+}
+
+.signup-container {
+    background-image: url("../images/neon.jpeg");
+    background-size: cover;
+    background-position: center;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+  
+    
+}
+
+.background-container {
+    background-image: url("../images/neon.jpeg");
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    overflow: hidden;
+    height: auto; 
+    }
+
+#storiesList {
+    margin-top: 20px;
+}
+
+.hr {
+    border-top: 1px solid #444;
+}
+#storiesList {
+    max-height: 500px; 
+    overflow-y: auto; 
+    margin-bottom: 20px; 
+}
+

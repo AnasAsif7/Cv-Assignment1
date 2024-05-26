@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/css/bootstrap.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXlY4R72p2+U0MyoAXQ+gc9h7mUrrD7tvggknOfc1pDA6jzE9abTFLCiP9er" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="/stylesheets/styles.css" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        #search-results {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            background-color: white;
+            border: 1px solid #ccc;
+            z-index: 1051; /* Ensure it is above the carousel */
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        #search-results li {
+            display: flex;
+            align-items: center;
+            padding: 5px;
+        }
+        #search-results img {
+            height: 30px;
+            margin-right: 10px;
+        }
+        #search-results a {
+            display: block;
+            width: 100%;
+            text-decoration: none;
+            color: black;
+        }
+          
+        #search-results a:hover {
+            background-color: #f1f1f1;
+        }
+        .navbar-nav .dropdown-menu {
+            z-index: 1051; /* Ensure it is above the carousel */
+        }
+        .carousel {
+            z-index: 1; /* Ensure the carousel is beneath the dropdowns */
+        }
+        
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">Copter</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarScroll">
+                <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/contact">Contact Us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/api">API</a>
+                    </li>
+                    <!-- <li class="nav-item">
+                        <a class="nav-link" href="/signup">Sign up</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/login">Login</a>
+                    </li> -->
+                    <% if (!user) { %>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/signup">Sign up</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/login">Login</a>
+                        </li>
+                        <% } else { %>
+                        <% if (isAdmin) { %>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/operations">Operations</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/add-game">Add Game</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/customer-requests">Customer Requests</a>
+                        </li>
+                        <% } %>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/logout">Logout</a>
+                        </li>
+                        <% } %>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Categories
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="/category/Adventure">Adventure</a></li>
+                            <li><a class="dropdown-item" href="/category/Action">Action</a></li>
+                            <li><a class="dropdown-item" href="/category/Fantasy">Fantasy</a></li>
+                            <li><a class="dropdown-item" href="/category/Shooting">Shooting</a></li>
+                            <li><a class="dropdown-item" href="/category/RPG">RPG</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <form class="d-flex position-relative" id="search-form">
+                    <input class="form-control me-2" type="search" name="query" id="search-input" placeholder="Search" aria-label="Search">
+                    <ul class="list-group" id="search-results"></ul>
+                </form>
+            </div>
+        </div>
+    </nav>
+    <script src="/javascripts/script.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#search-input').on('input', function() {
+                const query = $(this).val();
+
+                if (query.length > 0) {
+                    $.ajax({
+                        url: '/search',
+                        method: 'GET',
+                        data: { query },
+                        success: function(data) {
+                            $('#search-results').empty();
+                            if (data.length > 0) {
+                                data.forEach(game => {
+                                    $('#search-results').append(`
+                                        <li class="list-group-item">
+                                            <a href="/game/${game._id}">
+                                                <img src="${game.homePageImage}" alt="${game.name}">
+                                                ${game.name}
+                                            </a>
+                                        </li>
+                                    `);
+                                });
+                            } else {
+                                $('#search-results').append('<li class="list-group-item">No results found</li>');
+                            }
+                        },
+                        error: function() {
+                            $('#search-results').empty();
+                            $('#search-results').append('<li class="list-group-item">Error fetching results</li>');
+                        }
+                    });
+                } else {
+                    $('#search-results').empty();
+                }
+            });
+
+            // Ensure dropdown works
+            const dropdowns = document.querySelectorAll('.dropdown-toggle');
+            dropdowns.forEach(dropdown => {
+                dropdown.addEventListener('click', function(event) {
+                    event.stopPropagation();
+                    const menu = this.nextElementSibling;
+                    menu.classList.toggle('show');
+                });
+            });
+
+            document.addEventListener('click', function() {
+                const dropdownMenus = document.querySelectorAll('.dropdown-menu');
+                dropdownMenus.forEach(menu => {
+                    menu.classList.remove('show');
+                });
+            });
+        });
+    </script>
+</body>
+</html> 
+<!-- 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/css/bootstrap.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXlY4R72p2+U0MyoAXQ+gc9h7mUrrD7tvggknOfc1pDA6jzE9abTFLCiP9er" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="/stylesheets/styles.css" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        #search-results {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            background-color: #013369; /* Dark blue background */
+            border: 1px solid #03458c; /* Border with a slightly lighter blue */
+            z-index: 1051; /* Ensure it is above the carousel */
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        #search-results li {
+            display: flex;
+            align-items: center;
+            padding: 5px;
+            border-bottom: 1px solid #03458c; /* Divider line */
+        }
+        #search-results li:hover {
+            background-color: #03458c; /* Slightly lighter blue on hover */
+        }
+        #search-results img {
+            height: 30px;
+            margin-right: 10px;
+            border-radius: 5px; /* Rounded corners for the images */
+        }
+        #search-results a {
+            display: block;
+            width: 100%;
+            text-decoration: none;
+            color: #ffffff; /* White text */
+            font-size: 1em; /* Slightly larger text */
+        }
+        #search-results a:hover {
+            color: #ffcc00; /* Yellow text on hover */
+        }
+        .navbar-nav .dropdown-menu {
+            z-index: 1051; /* Ensure it is above the carousel */
+        }
+        .carousel {
+            z-index: 1; /* Ensure the carousel is beneath the dropdowns */
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">Copter</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarScroll">
+                <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/contact">Contact Us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/api">API</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/signup">Sign up</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/login">Login</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Categories
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="/category/Adventure">Adventure</a></li>
+                            <li><a class="dropdown-item" href="/category/Action">Action</a></li>
+                            <li><a class="dropdown-item" href="/category/Fantasy">Fantasy</a></li>
+                            <li><a class="dropdown-item" href="/category/Shooting">Shooting</a></li>
+                            <li><a class="dropdown-item" href="/category/RPG">RPG</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <form class="d-flex position-relative" id="search-form">
+                    <input class="form-control me-2" type="search" name="query" id="search-input" placeholder="Search" aria-label="Search">
+                    <ul class="list-group" id="search-results"></ul>
+                </form>
+            </div>
+        </div>
+    </nav>
+    <script src="/javascripts/script.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#search-input').on('input', function() {
+                const query = $(this).val();
+
+                if (query.length > 0) {
+                    $.ajax({
+                        url: '/search',
+                        method: 'GET',
+                        data: { query },
+                        success: function(data) {
+                            $('#search-results').empty();
+                            if (data.length > 0) {
+                                data.forEach(game => {
+                                    $('#search-results').append(`
+                                        <li class="list-group-item">
+                                            <a href="/game/${game._id}">
+                                                <img src="${game.homePageImage}" alt="${game.name}">
+                                                ${game.name}
+                                            </a>
+                                        </li>
+                                    `);
+                                });
+                            } else {
+                                $('#search-results').append('<li class="list-group-item">No results found</li>');
+                            }
+                        },
+                        error: function() {
+                            $('#search-results').empty();
+                            $('#search-results').append('<li class="list-group-item">Error fetching results</li>');
+                            console.log(error);
+                        }
+                    });
+                } else {
+                    $('#search-results').empty();
+                }
+            });
+
+            // Ensure dropdown works
+            const dropdowns = document.querySelectorAll('.dropdown-toggle');
+            dropdowns.forEach(dropdown => {
+                dropdown.addEventListener('click', function(event) {
+                    event.stopPropagation();
+                    const menu = this.nextElementSibling;
+                    menu.classList.toggle('show');
+                });
+            });
+
+            document.addEventListener('click', function() {
+                const dropdownMenus = document.querySelectorAll('.dropdown-menu');
+                dropdownMenus.forEach(menu => {
+                    menu.classList.remove('show');
+                });
+            });
+        });
+    </script>
+</body>
+</html>
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/css/bootstrap.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXlY4R72p2+U0MyoAXQ+gc9h7mUrrD7tvggknOfc1pDA6jzE9abTFLCiP9er" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="/stylesheets/styles.css" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        
+        
+            #search-results {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background-color: #013369; /* Dark blue background */
+                border: 1px solid #03458c; /* Border with a slightly lighter blue */
+                z-index: 1051; /* Ensure it is above the carousel */
+                max-height: 300px;
+                overflow-y: auto;
+                transition: background-color 0.3s ease, border-color 0.3s ease; /* Smooth transitions */
+            }
+            #search-results li {
+                display: flex;
+                align-items: center;
+                padding: 5px;
+                border-bottom: 1px solid #03458c; /* Divider line */
+                transition: background-color 0.3s ease; /* Smooth transitions */
+            }
+            #search-results li:hover {
+                background-color: #03458c; /* Slightly lighter blue on hover */
+            }
+            #search-results img {
+                height: 30px;
+                margin-right: 10px;
+                border-radius: 5px; /* Rounded corners for the images */
+                transition: transform 0.3s ease; /* Smooth transitions */
+            }
+            #search-results img:hover {
+                transform: scale(1.1); /* Slightly enlarge on hover */
+            }
+            #search-results a {
+                display: block;
+                width: 100%;
+                text-decoration: none;
+                color: #000000; /* White text */
+                font-size: 1em; /* Slightly larger text */
+                transition: color 0.3s ease; /* Smooth transitions */
+            }
+            #search-results a:hover {
+                color: #ffcc00; /* Yellow text on hover */
+            }
+            .navbar-nav .dropdown-menu {
+                z-index: 2000; /* Ensure it is above the carousel */
+            }
+            .carousel {
+                z-index: -2333; /* Ensure the carousel is beneath the dropdowns */
+            }
+        </style>
+        
+</head>
+<body>
+    
+    <nav class="navbar navbar-expand-lg bg-body-tertiary" style="z-index: 1000;">
+        <div class="container-fluid" style="z-index: 1000;">
+            <a class="navbar-brand" href="/" style="z-index: 1000;">Copter</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation" style="z-index: 1000;">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarScroll" style="z-index: 1000;">
+                <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px; z-index: 1000;">
+                    <li class="nav-item" style="z-index: 1000;">
+                        <a class="nav-link active" aria-current="page" href="/" style="z-index: 1000;">Home</a>
+                    </li>
+                    <li class="nav-item" style="z-index: 1000;">
+                        <a class="nav-link" href="/contact" style="z-index: 1000;">Contact Us</a>
+                    </li>
+                    <li class="nav-item" style="z-index: 1000;">
+                        <a class="nav-link" href="/api" style="z-index: 1000;">API</a>
+                    </li>
+                    <% if (!user) { %>
+                    <li class="nav-item" style="z-index: 1000;">
+                        <a class="nav-link" href="/signup" style="z-index: 1000;">Sign up</a>
+                    </li>
+                    <li class="nav-item" style="z-index: 1000;">
+                        <a class="nav-link" href="/login" style="z-index: 1000;">Login</a>
+                    </li>
+                <% } else { %>
+                    <% if (isAdmin) { %>
+                        <li class="nav-item" style="z-index: 1000;">
+                            <a class="nav-link" href="/operations" style="z-index: 1000;">Operations</a>
+                        </li>
+                        <li class="nav-item" style="z-index: 1000;">
+                            <a class="nav-link" href="/add-game" style="z-index: 1000;">Add Game</a>
+                        </li>
+                        <li class="nav-item" style="z-index: 1000;">
+                            <a class="nav-link" href="/customer-requests" style="z-index: 1000;">Customer Requests</a>
+                        </li>
+                    <% } %>
+                    <li class="nav-item" style="z-index: 1000;">
+                        <a class="nav-link" href="/logout" style="z-index: 1000;">Logout</a>
+                    </li>
+                <% } %>
+                    <li class="nav-item dropdown" style="z-index: 1000;">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="z-index: 1000;">
+                            Categories
+                        </a>
+                        <ul class="dropdown-menu" style="z-index: 1000;">
+                            <li style="z-index: 1000;"><a class="dropdown-item" href="/category/Adventure" style="z-index: 1000;">Adventure</a></li>
+                            <li style="z-index: 1000;"><a class="dropdown-item" href="/category/Action" style="z-index: 1000;">Action</a></li>
+                            <li style="z-index: 1000;"><a class="dropdown-item" href="/category/Fantasy" style="z-index: 1000;">Fantasy</a></li>
+                            <li style="z-index: 1000;"><a class="dropdown-item" href="/category/Shooting" style="z-index: 1000;">Shooting</a></li>
+                            <li style="z-index: 1000;"><a class="dropdown-item" href="/category/RPG" style="z-index: 1000;">RPG</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item" style="z-index: 1000;">
+                          <a class="nav-link" href="/operations" style="z-index: 1000;">Operations</a>
+                        </li>
+                        <li class="nav-item" style="z-index: 1000;">
+                            <a class="nav-link" href="/add-game" style="z-index: 1000;">Add Game</a>
+                        </li>
+                        <li class="nav-item" style="z-index: 1000;">
+                            <a class="nav-link" href="/customer-requests" style="z-index: 1000;">Customer Requests</a>
+                        </li>
+                </ul>
+                <form class="d-flex position-relative" id="search-form" style="z-index: 1000;">
+                    <input class="form-control me-2" type="search" name="query" id="search-input" placeholder="Search" aria-label="Search" style="z-index: 1000;">
+                    <ul class="list-group" id="search-results" style="z-index: 1000;"></ul>
+                </form>
+            </div>
+        </div>
+    </nav>
+    <script src="/javascripts/script.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#search-input').on('input', function() {
+                const query = $(this).val();
+
+                if (query.length > 0) {
+                    $.ajax({
+                        url: '/search',
+                        method: 'GET',
+                        data: { query },
+                        success: function(data) {
+                            $('#search-results').empty();
+                            if (data.length > 0) {
+                                data.forEach(game => {
+                                    $('#search-results').append(`
+                                        <li class="list-group-item">
+                                            <a href="/game/${game._id}">
+                                                <img src="${game.homePageImage}" alt="${game.name}">
+                                                ${game.name}
+                                            </a>
+                                        </li>
+                                    `);
+                                });
+                            } else {
+                                $('#search-results').append('<li class="list-group-item">No results found</li>');
+                            }
+                        },
+                        error: function() {
+                            $('#search-results').empty();
+                            $('#search-results').append('<li class="list-group-item">Error fetching results</li>');
+                        }
+                    });
+                } else {
+                    $('#search-results').empty();
+                }
+            });
+
+            
+            const dropdowns = document.querySelectorAll('.dropdown-toggle');
+            dropdowns.forEach(dropdown => {
+                dropdown.addEventListener('click', function(event) {
+                    event.stopPropagation();
+                    const menu = this.nextElementSibling;
+                    menu.classList.toggle('show');
+                });
+            });
+
+            document.addEventListener('click', function() {
+                const dropdownMenus = document.querySelectorAll('.dropdown-menu');
+                dropdownMenus.forEach(menu => {
+                    menu.classList.remove('show');
+                });
+            });
+        });
+    </script>
+</body>
+</html>
+
+ --> -->

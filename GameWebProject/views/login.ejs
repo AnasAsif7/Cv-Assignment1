@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login - Gaming World</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/stylesheets/login.css" />
+    <link href="https://use.fontawesome.com/releases/v5.15.1/css/all.css" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        .alert {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="background-container">
+        <div class="container mt-5 signup-container">
+            <h2 class="mb-4">Login</h2>
+
+            <div id="error-msg-container" class="alert alert-danger" role="alert">
+                <%= error_msg %>
+            </div>
+            <div id="success-msg-container" class="alert alert-success" role="alert">
+                <%= success_msg %>
+            </div>
+
+            <form id="loginForm" method="POST" action="/login">
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" class="form-control" id="email" name="email" placeholder="Email" required />
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" class="form-control" id="password" name="password" placeholder="Password" required />
+                </div>
+
+                <div class="text-center">
+                    <button type="submit" class="btn btn-outline-success btn-lg">Login</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            if ($('#error-msg-container').text().trim().length > 0) {
+                $('#error-msg-container').show();
+            }
+            if ($('#success-msg-container').text().trim().length > 0) {
+                $('#success-msg-container').show();
+            }
+        });
+    </script>
+</body>
+</html>

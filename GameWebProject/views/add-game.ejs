@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add New Game</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/stylesheets/styles.css">
+</head><style>
+    
+        body {
+            background-color: #052547 !important;
+            color: #fff;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            background-color: #013369 !important;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.8);
+            transition: transform 0.3s ease;
+        }
+
+        .container:hover {
+            transform: scale(1.02);
+        }
+
+        h2 {
+            color: #f2f2f2 !important;
+            text-align: center;
+            margin-bottom: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        h2:hover {
+            transform: scale(1.05);
+        }
+
+        .form-group label {
+            color: #ffffff;
+            transition: transform 0.3s ease;
+        }
+
+        .form-group label:hover {
+            transform: scale(1.05);
+        }
+
+        .form-control {
+            background-color: #023061;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .form-control:focus {
+            box-shadow: 0 0 10px #ffcc00;
+            transform: scale(1.03);
+        }
+
+        .btn-primary {
+            background-color: #ffcc00 !important;
+            color: #000 !important;
+            border: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: #cea502 !important;
+            transform: scale(1.05);
+            box-shadow: 0 0 10px #ffcc00;
+        }
+    </style>
+
+<body>
+    <div class="container mt-5">
+        <h2>Add New Game</h2>
+        <form action="/games" method="POST">
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" class="form-control" id="name" name="name" required>
+            </div>
+            <div class="form-group">
+                <label for="newPrice">New Price</label>
+                <input type="number" class="form-control" id="newPrice" name="newPrice" required>
+            </div>
+            <div class="form-group">
+                <label for="oldPrice">Old Price</label>
+                <input type="number" class="form-control" id="oldPrice" name="oldPrice" required>
+            </div>
+            <div class="form-group">
+                <label for="homePageImageText">Home Page Image Text</label>
+                <input type="text" class="form-control" id="homePageImageText" name="homePageImageText" required>
+            </div>
+            <div class="form-group">
+                <label for="discountPercentage">Discount Percentage</label>
+                <input type="number" class="form-control" id="discountPercentage" name="discountPercentage" required>
+            </div>
+            <div class="form-group">
+                <label for="homePageImage">Home Page Image URL</label>
+                <input type="text" class="form-control" id="homePageImage" name="homePageImage" required>
+            </div>
+            <div class="form-group">
+                <label for="descBigImg">Description Big Image URL</label>
+                <input type="text" class="form-control" id="descBigImg" name="descBigImg" required>
+            </div>
+            <div class="form-group">
+                <label for="descImg1">Description Image 1 URL</label>
+                <input type="text" class="form-control" id="descImg1" name="descImg1" required>
+            </div>
+            <div class="form-group">
+                <label for="descImg2">Description Image 2 URL</label>
+                <input type="text" class="form-control" id="descImg2" name="descImg2" required>
+            </div>
+            <div class="form-group">
+                <label for="descImg3">Description Image 3 URL</label>
+                <input type="text" class="form-control" id="descImg3" name="descImg3" required>
+            </div>
+            <div class="form-group">
+                <label for="descImg4">Description Image 4 URL</label>
+                <input type="text" class="form-control" id="descImg4" name="descImg4" required>
+            </div>
+            <div class="form-group">
+                <label for="descImg5">Description Image 5 URL</label>
+                <input type="text" class="form-control" id="descImg5" name="descImg5" required>
+            </div>
+            <div class="form-group">
+                <label for="category">Category</label>
+                <input type="text" class="form-control" id="category" name="category" required>
+            </div>
+            <div class="form-group">
+                <label for="gameTrailerLink">Game Trailer Link</label>
+                <input type="text" class="form-control" id="gameTrailerLink" name="gameTrailerLink" required>
+            </div>
+            <div class="form-group">
+                <label for="description">Description</label>
+                <textarea class="form-control" id="description" name="description" rows="3" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="sysReq">System Requirements</label>
+                <textarea class="form-control" id="sysReq" name="sysReq" rows="2" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="procReq">Processor Requirements</label>
+                <textarea class="form-control" id="procReq" name="procReq" rows="2" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="memReq">Memory Requirements</label>
+                <textarea class="form-control" id="memReq" name="memReq" rows="2" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="rating">Rating</label>
+                <input type="number" class="form-control" id="rating" name="rating" min="0" max="5" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Add Game</button>
+        </form>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

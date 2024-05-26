@@ -1,0 +1,5 @@
+{
+    "jwtPrivateKey": "your_jwt_private_key",
+    "sessionSecret": "your_session_secret"
+  }
+  
