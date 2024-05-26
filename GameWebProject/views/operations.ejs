@@ -1,342 +1,211 @@
-<!-- <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Operations - Game Store</title>
-  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-</head><style>
-  body {
-    background-color: #052547 !important;
-    color: #fff;
-    font-family: Arial, sans-serif;
-  }
-
-  .container {
-    background-color: #013369 !important;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.8);
-    transition: transform 0.3s ease;
-  }
-
-  
-  h2 {
-    color: #f2f2f2 !important;
-    text-align: center;
-    margin-bottom: 20px;
-    transition: transform 0.3s ease;
-  }
-
-  h2:hover {
-    transform: scale(1.05);
-  }
-
-  .form-control {
-    background-color: #ffffff;
-    color: #000000;
-    border: none;
-    border-radius: 5px;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-  }
-
-  .form-control:focus {
-    box-shadow: 0 0 10px #ffcc00;
-    transform: scale(1.03);
-  }
-
-  .btn-primary {
-    background-color: #ffcc00 !important;
-    color: #000 !important;
-    border: none;
-    border-radius: 5px;
-    transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
-  }
-
-  .btn-primary:hover {
-    background-color: #cea502 !important;
-    transform: scale(1.05);
-    box-shadow: 0 0 10px #ffcc00;
-  }
-
-  .btn-danger {
-    transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
-  }
-
-  .btn-danger:hover {
-    background-color: #ff6666 !important;
-    transform: scale(1.05);
-    
-  }
-
-  table {
-    color: #fff;
-  }
-
-  thead th {
-    background-color: #03458c;
-    color: #ffffff;
-  }
-
-  tbody tr {
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-  }
-
-  tbody tr:hover {
-    transform: scale(1.02);
-    box-shadow: 0 0 10px #ffcc00;
-  }</style>
-<body>
-  <div class="container mt-5">
-    <h2>Manage Games</h2>
-    <table class="table table-striped">
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Old Price</th>
-          <th>Discount Percentage</th>
-          <th>Desc Big Image</th>
-          <th>Category</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody id="gameTableBody">
-        <% games.forEach(game => { %>
-        <tr data-id="<%= game._id %>">
-          <td><input type="text" class="form-control" value="<%= game.name %>"></td>
-          <td><input type="number" class="form-control" value="<%= game.oldPrice %>"></td>
-          <td><input type="number" class="form-control" value="<%= game.discountPercentage %>"></td>
-          <td><input type="text" class="form-control" value="<%= game.descBigImg %>"></td>
-          <td><input type="text" class="form-control" value="<%= game.category %>"></td>
-          <td>
-            <button class="btn btn-primary btn-sm update-game">Update</button>
-            <button class="btn btn-danger btn-sm delete-game">Delete</button>
-          </td>
-        </tr>
-        <% }) %>
-      </tbody>
-    </table>
-  </div>
-  <script>
-    $(document).ready(function() {
-      // Update game
-      $('.update-game').click(function() {
-        const row = $(this).closest('tr');
-        const id = row.data('id');
-        const updatedData = {
-          name: row.find('input').eq(0).val(),
-          oldPrice: row.find('input').eq(1).val(),
-          discountPercentage: row.find('input').eq(2).val(),
-          descBigImg: row.find('input').eq(3).val(),
-          category: row.find('input').eq(4).val()
-        };
-        $.ajax({
-          url: `/game/${id}`,
-          method: 'PUT',
-          contentType: 'application/json',
-          data: JSON.stringify(updatedData),
-          success: function(response) {
-            alert('Game updated successfully');
-          },
-          error: function(error) {
-            alert('Error updating game');
-          }
-        });
-      });
-
-      // Delete game
-      $('.delete-game').click(function() {
-        const id = $(this).closest('tr').data('id');
-        $.ajax({
-          url: `/game/${id}`,
-          method: 'DELETE',
-          success: function(response) {
-            alert('Game deleted successfully');
-            location.reload();
-          },
-          error: function(error) {
-            alert('Error deleting game');
-          }
-        });
-      });
-    });
-  </script>
-</body>
-</html> -->
-
-
-
-
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Operations - Game Store</title>
-  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <style>
-    body {
-      background-color: #052547 !important;
-      color: #fff;
-      font-family: Arial, sans-serif;
-    }
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Operations - Game Store</title>
+    <link
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+      body {
+        background-color: #052547 !important;
+        color: #fff;
+        font-family: Arial, sans-serif;
+      }
 
-    .container {
-      background-color: #013369 !important;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.8);
-      transition: transform 0.3s ease;
-    }
+      .container {
+        background-color: #013369 !important;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.8);
+        transition: transform 0.3s ease;
+      }
 
-    h2 {
-      color: #f2f2f2 !important;
-      text-align: center;
-      margin-bottom: 20px;
-      transition: transform 0.3s ease;
-    }
+      h2 {
+        color: #f2f2f2 !important;
+        text-align: center;
+        margin-bottom: 20px;
+        transition: transform 0.3s ease;
+      }
 
-    h2:hover {
-      transform: scale(1.05);
-    }
+      h2:hover {
+        transform: scale(1.05);
+      }
 
-    .form-control {
-      background-color: #ffffff;
-      color: #000000;
-      border: none;
-      border-radius: 5px;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
+      .form-control {
+        background-color: #ffffff;
+        color: #000000;
+        border: none;
+        border-radius: 5px;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
 
-    .form-control:focus {
-      box-shadow: 0 0 10px #ffcc00;
-      transform: scale(1.03);
-    }
+      .form-control:focus {
+        box-shadow: 0 0 10px #ffcc00;
+        transform: scale(1.03);
+      }
 
-    .btn-primary {
-      background-color: #ffcc00 !important;
-      color: #000 !important;
-      border: none;
-      border-radius: 5px;
-      transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
-    }
+      .btn-primary {
+        background-color: #ffcc00 !important;
+        color: #000 !important;
+        border: none;
+        border-radius: 5px;
+        transition: background-color 0.3s ease, transform 0.3s ease,
+          box-shadow 0.3s ease;
+      }
 
-    .btn-primary:hover {
-      background-color: #cea502 !important;
-      transform: scale(1.05);
-      box-shadow: 0 0 10px #ffcc00;
-    }
+      .btn-primary:hover {
+        background-color: #cea502 !important;
+        transform: scale(1.05);
+        box-shadow: 0 0 10px #ffcc00;
+      }
 
-    .btn-danger {
-      transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
-    }
+      .btn-danger {
+        transition: background-color 0.3s ease, transform 0.3s ease,
+          box-shadow 0.3s ease;
+      }
 
-    .btn-danger:hover {
-      background-color: #ff6666 !important;
-      transform: scale(1.05);
-    }
+      .btn-danger:hover {
+        background-color: #ff6666 !important;
+        transform: scale(1.05);
+      }
 
-    table {
-      color: #fff;
-    }
+      table {
+        color: #fff;
+      }
 
-    thead th {
-      background-color: #03458c;
-      color: #ffffff;
-    }
+      thead th {
+        background-color: #03458c;
+        color: #ffffff;
+      }
 
-    tbody tr {
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
+      tbody tr {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
 
-    tbody tr:hover {
-      transform: scale(1.02);
-      box-shadow: 0 0 10px #ffcc00;
-    }
+      tbody tr:hover {
+        transform: scale(1.02);
+        box-shadow: 0 0 10px #ffcc00;
+      }
 
-    .table-responsive {
-      overflow-x: auto;
-    }
-  </style>
-</head>
-<body>
-  <div class="container mt-5">
-    <h2>Manage Games</h2>
-    <div class="table-responsive">
-      <table class="table table-striped">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Old Price</th>
-            <th>Discount Percentage</th>
-            <th>Desc Big Image</th>
-            <th>Category</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody id="gameTableBody">
-          <% games.forEach(game => { %>
-          <tr data-id="<%= game._id %>">
-            <td><input type="text" class="form-control" value="<%= game.name %>"></td>
-            <td><input type="number" class="form-control" value="<%= game.oldPrice %>"></td>
-            <td><input type="number" class="form-control" value="<%= game.discountPercentage %>"></td>
-            <td><input type="text" class="form-control" value="<%= game.descBigImg %>"></td>
-            <td><input type="text" class="form-control" value="<%= game.category %>"></td>
-            <td>
-              <button class="btn btn-primary btn-sm update-game">Update</button>
-              <button class="btn btn-danger btn-sm delete-game">Delete</button>
-            </td>
-          </tr>
-          <% }) %>
-        </tbody>
-      </table>
+      .table-responsive {
+        overflow-x: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container mt-5">
+      <h2>Manage Games</h2>
+      <div class="table-responsive">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Old Price</th>
+              <th>Discount Percentage</th>
+              <th>Desc Big Image</th>
+              <th>Category</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="gameTableBody">
+            <% games.forEach(game => { %>
+            <tr data-id="<%= game._id %>">
+              <td>
+                <input
+                  type="text"
+                  class="form-control"
+                  value="<%= game.name %>"
+                />
+              </td>
+              <td>
+                <input
+                  type="number"
+                  class="form-control"
+                  value="<%= game.oldPrice %>"
+                />
+              </td>
+              <td>
+                <input
+                  type="number"
+                  class="form-control"
+                  value="<%= game.discountPercentage %>"
+                />
+              </td>
+              <td>
+                <input
+                  type="text"
+                  class="form-control"
+                  value="<%= game.descBigImg %>"
+                />
+              </td>
+              <td>
+                <input
+                  type="text"
+                  class="form-control"
+                  value="<%= game.category %>"
+                />
+              </td>
+              <td>
+                <button class="btn btn-primary btn-sm update-game">
+                  Update
+                </button>
+                <button class="btn btn-danger btn-sm delete-game">
+                  Delete
+                </button>
+              </td>
+            </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
     </div>
-  </div>
-  <script>
-    $(document).ready(function() {
-      // Update game
-      $('.update-game').click(function() {
-        const row = $(this).closest('tr');
-        const id = row.data('id');
-        const updatedData = {
-          name: row.find('input').eq(0).val(),
-          oldPrice: row.find('input').eq(1).val(),
-          discountPercentage: row.find('input').eq(2).val(),
-          descBigImg: row.find('input').eq(3).val(),
-          category: row.find('input').eq(4).val()
-        };
-        $.ajax({
-          url: `/game/${id}`,
-          method: 'PUT',
-          contentType: 'application/json',
-          data: JSON.stringify(updatedData),
-          success: function(response) {
-            alert('Game updated successfully');
-          },
-          error: function(error) {
-            alert('Error updating game');
-          }
+    <script>
+      $(document).ready(function () {
+        // Update game
+        $(".update-game").click(function () {
+          const row = $(this).closest("tr");
+          const id = row.data("id");
+          const updatedData = {
+            name: row.find("input").eq(0).val(),
+            oldPrice: row.find("input").eq(1).val(),
+            discountPercentage: row.find("input").eq(2).val(),
+            descBigImg: row.find("input").eq(3).val(),
+            category: row.find("input").eq(4).val(),
+          };
+          $.ajax({
+            url: `/game/${id}`,
+            method: "PUT",
+            contentType: "application/json",
+            data: JSON.stringify(updatedData),
+            success: function (response) {
+              alert("Game updated successfully");
+            },
+            error: function (error) {
+              alert("Error updating game");
+            },
+          });
         });
-      });
 
-      // Delete game
-      $('.delete-game').click(function() {
-        const id = $(this).closest('tr').data('id');
-        $.ajax({
-          url: `/game/${id}`,
-          method: 'DELETE',
-          success: function(response) {
-            alert('Game deleted successfully');
-            location.reload();
-          },
-          error: function(error) {
-            alert('Error deleting game');
-          }
+        // Delete game
+        $(".delete-game").click(function () {
+          const id = $(this).closest("tr").data("id");
+          $.ajax({
+            url: `/game/${id}`,
+            method: "DELETE",
+            success: function (response) {
+              alert("Game deleted successfully");
+              location.reload();
+            },
+            error: function (error) {
+              alert("Error deleting game");
+            },
+          });
         });
       });
-    });
-  </script>
-</body>
+    </script>
+  </body>
 </html>

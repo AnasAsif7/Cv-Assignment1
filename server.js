@@ -95,13 +95,46 @@ app.get("/api", (req, res) => {
 app.get("/protected-route", apiauth, (req, res) => {
   res.send("This is a protected route.");
 });
+// app.get('/search', async (req, res) => {
+//   const query = req.query.query;
+//   try {
+//       const games = await Game.find({ name: new RegExp(query, 'i') }); // Adjust the search logic as needed
+//       res.json(games);
+//   } catch (err) {
+//       res.status(500).send("Server Error");
+//   }
+// });
+// app.get('/search-query', async (req, res) => {
+//   const query = req.query.query;
+//   try {
+//     const regex = new RegExp(query.replace(/\s+/g, '\\s*'), 'i'); // Regex to ignore cases and spaces
+//     const games = await Game.find({ name: regex }); // Adjust the search logic as needed
+//     res.render('searchResults', { searchResults: games, query });
+//   } catch (err) {
+//     res.status(500).send("Server Error");
+//   }
+// });
+
+// Live search route
 app.get('/search', async (req, res) => {
   const query = req.query.query;
   try {
-      const games = await Game.find({ name: new RegExp(query, 'i') }); // Adjust the search logic as needed
+      const games = await Game.find({ name: new RegExp(query, 'i') });
       res.json(games);
   } catch (err) {
       res.status(500).send("Server Error");
+  }
+});
+
+// Search results page route
+app.get('/search-query', async (req, res) => {
+  const query = req.query.query;
+  try {
+    const regex = new RegExp(query.replace(/\s+/g, '\\s*'), 'i');
+    const games = await Game.find({ name: regex });
+    res.render('searchResults', { searchResults: games, query });
+  } catch (err) {
+    res.status(500).send("Server Error");
   }
 });
 

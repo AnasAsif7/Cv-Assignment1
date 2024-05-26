@@ -83,67 +83,7 @@
     </style>
 </head>
 <body>
-    <!-- <nav class="navbar navbar-expand-lg bg-body-tertiary">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="/">Copter</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarScroll">
-                <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="/">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/contact">Contact Us</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/api">API</a>
-                    </li>
-                    
-                    <% if (!user) { %>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/signup">Sign up</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/login">Login</a>
-                        </li>
-                        <% } else { %>
-                        <% if (isAdmin) { %>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/operations">Operations</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/add-game">Add Game</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/customer-requests">Customer Requests</a>
-                        </li>
-                        <% } %>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/logout">Logout</a>
-                        </li>
-                        <% } %>
-                    <li class="nav-item dropdown"style="z-index: 1000;">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="z-index: 1000;">
-                            Categories
-                        </a>
-                        <ul class="dropdown-menu" style="z-index: 1000;">
-                            <li><a class="dropdown-item" style="z-index: 1000;" href="/category/Adventure">Adventure</a></li>
-                            <li><a class="dropdown-item" style="z-index: 1000;"href="/category/Action">Action</a></li>
-                            <li><a class="dropdown-item" style="z-index: 1000;"href="/category/Fantasy">Fantasy</a></li>
-                            <li><a class="dropdown-item" style="z-index: 1000;"href="/category/Shooting">Shooting</a></li>
-                            <li><a class="dropdown-item" style="z-index: 1000;"href="/category/RPG">RPG</a></li>
-                        </ul>
-                    </li>
-                </ul>
-                <form class="d-flex position-relative" id="search-form">
-                    <input class="form-control me-2" type="search" name="query" id="search-input" placeholder="Search" aria-label="Search">
-                    <ul class="list-group" id="search-results"></ul>
-                </form>
-            </div>
-        </div>
-    </nav> -->
+   
     <nav class="navbar navbar-expand-lg bg-body-tertiary" style="z-index: 1050;">
         <div class="container-fluid" style="z-index: 1050;">
             <a class="navbar-brand" href="/" style="z-index: 1050;">Copter</a>
@@ -199,68 +139,54 @@
                         </ul>
                     </li>
                 </ul>
-                <form class="d-flex position-relative" id="search-form" style="z-index: 1050;">
+                
+                <form class="d-flex position-relative" id="search-form" action="/search-query" method="GET" style="z-index: 1050;">
                     <input class="form-control me-2" type="search" name="query" id="search-input" placeholder="Search" aria-label="Search" style="z-index: 1050;">
                     <ul class="list-group" id="search-results" style="z-index: 1050;"></ul>
                 </form>
+                
+                
             </div>
         </div>
     </nav>
     <script src="/javascripts/script.js"></script>
-    <script>
-        $(document).ready(function() {
-            $('#search-input').on('input', function() {
-                const query = $(this).val();
-
-                if (query.length > 0) {
-                    $.ajax({
-                        url: '/search',
-                        method: 'GET',
-                        data: { query },
-                        success: function(data) {
-                            $('#search-results').empty();
-                            if (data.length > 0) {
-                                data.forEach(game => {
-                                    $('#search-results').append(`
-                                        <li class="list-group-item">
-                                            <a href="/game/${game._id}">
-                                                <img src="${game.homePageImage}" alt="${game.name}">
-                                                ${game.name}
-                                            </a>
-                                        </li>
-                                    `);
-                                });
-                            } else {
-                                $('#search-results').append('<li class="list-group-item">No results found</li>');
-                            }
-                        },
-                        error: function() {
-                            $('#search-results').empty();
-                            $('#search-results').append('<li class="list-group-item">Error fetching results</li>');
+    
+    <script>$(document).ready(function() {
+        $('#search-input').on('input', function() {
+            const query = $(this).val();
+    
+            if (query.length > 0) {
+                $.ajax({
+                    url: '/search',
+                    method: 'GET',
+                    data: { query },
+                    success: function(data) {
+                        $('#search-results').empty();
+                        if (data.length > 0) {
+                            data.forEach(game => {
+                                $('#search-results').append(`
+                                    <li class="list-group-item">
+                                        <a href="/game/${game._id}">
+                                            <img src="${game.homePageImage}" alt="${game.name}">
+                                            ${game.name}
+                                        </a>
+                                    </li>
+                                `);
+                            });
+                        } else {
+                            $('#search-results').append('<li class="list-group-item">No results found</li>');
                         }
-                    });
-                } else {
-                    $('#search-results').empty();
-                }
-            });
-
-            
-            const dropdowns = document.querySelectorAll('.dropdown-toggle');
-            dropdowns.forEach(dropdown => {
-                dropdown.addEventListener('click', function(event) {
-                    event.stopPropagation();
-                    const menu = this.nextElementSibling;
-                    menu.classList.toggle('show');
+                    },
+                    error: function() {
+                        $('#search-results').empty();
+                        $('#search-results').append('<li class="list-group-item">Error fetching results</li>');
+                    }
                 });
-            });
-
-            document.addEventListener('click', function() {
-                const dropdownMenus = document.querySelectorAll('.dropdown-menu');
-                dropdownMenus.forEach(menu => {
-                    menu.classList.remove('show');
-                });
-            });
+            } else {
+                $('#search-results').empty();
+            }
         });
+    });
     </script>
 </body>
 </html> 
