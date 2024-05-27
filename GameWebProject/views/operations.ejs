@@ -165,7 +165,7 @@
     </div>
     <script>
       $(document).ready(function () {
-        // Update game
+       
         $(".update-game").click(function () {
           const row = $(this).closest("tr");
           const id = row.data("id");
@@ -196,7 +196,7 @@
             },
           });
         });
-        // Delete game
+        
         $(".delete-game").click(function () {
           const id = $(this).closest("tr").data("id");
           $.ajax({

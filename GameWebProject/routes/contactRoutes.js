@@ -3,7 +3,7 @@ const router = express.Router();
 const Contact = require("../models/Contact");
 const sessionAuth = require("../middleware/sessionAuth");
 
-// Middleware to check if user is admin
+
 function isAdmin(req, res, next) {
   if (res.locals.isAdmin) {
     next();
@@ -12,7 +12,7 @@ function isAdmin(req, res, next) {
   }
 }
 
-// Handle contact form submission
+
 router.post("/contact", async (req, res) => {
   const { firstName, lastName, email, subject, message } = req.body;
 

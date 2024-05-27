@@ -7,7 +7,7 @@ const flash = require("connect-flash");
 const cookieParser = require("cookie-parser");
 const config = require("config");
 
-// Import routes
+
 const authRoutes = require("./GameWebProject/routes/authRoutes");
 
 const cartRoutes = require("./GameWebProject/routes/cartRoutes");
@@ -20,16 +20,16 @@ const sessionAuth = require("./GameWebProject/middleware/sessionAuth");
 const Game = require("./GameWebProject/models/Game");
 const app = express();
 
-//
+
 app.set("view engine", "ejs");
 
-// Set the views directory
+
 app.set("views", path.join(__dirname, "GameWebProject", "views"));
 
-// Serve static files
+
 app.use(express.static(path.join(__dirname, "GameWebProject", "public")));
 app.use(express.urlencoded({ extended: true }));
-// Middleware
+
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cookieParser());
@@ -41,7 +41,7 @@ app.use(
     secret: config.get("sessionSecret"),
     resave: false,
     saveUninitialized: false,
-    cookie: { secure: false }, // Set secure: true if you are using https
+    cookie: { secure: false }, 
   })
 );
 app.use(flash());
@@ -54,7 +54,6 @@ app.use(flash());
 //   next();
 // });
 
-// Connect flash middleware
 
 
 app.use((req, res, next) => {
@@ -110,7 +109,7 @@ app.get("/protected-route", apiauth, (req, res) => {
   res.send("This is a protected route.");
 });
 
-// Live search route
+
 app.get("/search", async (req, res) => {
   const query = req.query.query;
   try {
@@ -121,7 +120,7 @@ app.get("/search", async (req, res) => {
   }
 });
 
-// Search results page route
+
 app.get("/search-query", async (req, res) => {
   const query = req.query.query;
   try {
@@ -132,20 +131,20 @@ app.get("/search-query", async (req, res) => {
     res.status(500).send("Server Error");
   }
 });app.post('/checkout', (req, res) => {
-  // Logic to clear the cart
+ 
   req.session.cart = [];
   
-  // Send an alert indicating purchase is complete
+ 
   req.flash('success_msg', 'Purchase completed successfully.');
   res.redirect('/cart');
 });
 
-// Start the server
+
 app.listen(3000, () => {
   console.log("Server is running on port 3000");
 });
 
-// Function to add a game to the database
+
 const addGame = async (gameData) => {
   const game = new Game({
     name: gameData.name,
@@ -153,7 +152,7 @@ const addGame = async (gameData) => {
     oldPrice: gameData.oldPrice,
     discountPercentage: gameData.discountPercentage,
     homePageImage: gameData.homePageImage,
-    homePageImageText: gameData.homePageImageText, // Added homePageImageText
+    homePageImageText: gameData.homePageImageText, 
     descBigImg: gameData.descBigImg,
     descImg1: gameData.descImg1,
     descImg2: gameData.descImg2,
@@ -176,14 +175,14 @@ const addGame = async (gameData) => {
     console.error(`Error adding game: ${gameData.name}`, err);
   }
 };
-// List of game objects to be added to the database
+
 const gameList = [
   {
     name: "FarCry6",
     oldPrice: 89.99,
     discountPercentage: 75,
     homePageImage: "https://4kwallpapers.com/images/walls/thumbs_3t/1829.jpg",
-    homePageImageText: "Welcome to Yara!", // Added homePageImageText
+    homePageImageText: "Welcome to Yara!",
     descBigImg: "https://4kwallpapers.com/images/walls/thumbs_3t/1772.jpg",
     descImg1:
       "https://images.greenmangaming.com/37c197362baf4fbf8efdb63d89cc1e40/d64542e234634488b27ae259f6142915.jpeg",
@@ -1127,7 +1126,7 @@ const gameList = [
     rating: 4.4,
   },
 
-  // Add more game objects here
+  
 ];
 
 gameList.forEach((game) => {
@@ -1135,13 +1134,13 @@ gameList.forEach((game) => {
   game.newPrice = (game.oldPrice - discountAmount).toFixed(2);
 });
 
-// Function to add all games from the list to the database
+
 const addGames = async (gameList) => {
   for (const gameData of gameList) {
     await addGame(gameData);
   }
-  // mongoose.connection.close(); // Close the connection when done
+ 
 };
 
-// Call the function to add games
+
 // addGames(gameList);
