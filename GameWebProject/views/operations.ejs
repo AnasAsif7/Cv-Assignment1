@@ -178,7 +178,7 @@
             name: row.find("input").eq(0).val(),
             oldPrice: oldPrice,
             discountPercentage: discountPercentage,
-            newPrice: newPrice,
+            newPrice: newPrice.toFixed(2),
             descBigImg: row.find("input").eq(3).val(),
             category: row.find("input").eq(4).val(),
           };
