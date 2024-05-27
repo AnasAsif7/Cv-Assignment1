@@ -930,25 +930,25 @@ a:hover {
 }
 
 .pagination a {
-  color: #ffffff; /* White color for the links */
+  color: #ffffff; 
   padding: 8px 16px;
   text-decoration: none;
-  border: 1px solid #013369; /* Match the blue shade used in your theme */
+  border: 1px solid #013369; 
   margin: 0 4px;
-  background-color: #03458c; /* Match button background */
-  border-radius: 5px; /* Rounded corners for the pagination links */
-  transition: background-color 0.3s, transform 0.3s; /* Smooth transitions */
+  background-color: #03458c; 
+  border-radius: 5px; 
+  transition: background-color 0.3s, transform 0.3s; 
 }
 
 .pagination a.active {
-  background-color: #0056b3; /* Match active background color to theme */
-  color: #ffffff; /* White text for active state */
-  border: 1px solid #0056b3; /* Border color matching active background */
+  background-color: #0056b3; 
+  color: #ffffff; 
+  border: 1px solid #0056b3; 
 }
 
 .pagination a:hover:not(.active) {
-  background-color: #013369; /* Darker blue on hover */
-  transform: scale(1.05); /* Slightly enlarge on hover */
+  background-color: #013369; 
+  transform: scale(1.05); 
 }
 
 
