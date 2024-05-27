@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= category %> Games</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/css/bootstrap.min.css"
+    />
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+      crossorigin="anonymous"
+    ></script>
+    <link rel="stylesheet" href="/stylesheets/styles.css" />
+    <link rel="stylesheet" href="/stylesheets/styles.css" />
+  </head>
+  <body>
+    <%- include('navbar') %>
+    <div class="container mt-5" style="z-index: -2333">
+      <h2 class="section2-heading2" style="z-index: -2333">
+        <%= category %> Games
+      </h2>
+      <div class="row" style="z-index: -2333">
+        <% if (categoryResults.length > 0) { %> <%
+        categoryResults.forEach(function(game) { %>
+        <div class="col-lg-3 col-md-6 col-sm-12">
+          <a href="/game/<%= game._id %>">
+            <div class="vertical-image-container" style="z-index: 1">
+              <div class="vertical-image-overlay">
+                <div class="image-text2"><%= game.name %></div>
+              </div>
+              <img src="<%= game.homePageImage %>" alt="<%= game.name %>" />
+            </div>
+          </a>
+        </div>
+        <% }); %> <% } else { %>
+        <p style="z-index: -2333">No games found in this category.</p>
+        <% } %>
+      </div>
+    </div>
+    <script src="/javascripts/script.js"></script>
+  </body>
+</html>

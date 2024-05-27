@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sign Up - Gaming World</title>
+    <link
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/stylesheets/signup.css" />
+    <link
+      href="https://use.fontawesome.com/releases/v5.15.1/css/all.css"
+      rel="stylesheet"
+    />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="/javascripts/signup.js"></script>
+    <style>
+      .alert {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="background-container">
+      <div class="container mt-5 signup-container">
+        <h2 class="mb-4">Sign Up</h2>
+
+        <div id="error-msg-container" class="alert alert-danger" role="alert">
+          <%= error_msg %>
+        </div>
+        <div
+          id="success-msg-container"
+          class="alert alert-success"
+          role="alert"
+        >
+          <%= success_msg %>
+        </div>
+
+        <form id="signupForm" method="POST" action="/signup">
+          <div class="form-group">
+            <label for="username">Username</label>
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text"
+                  ><i class="fas fa-user"></i
+                ></span>
+              </div>
+              <input
+                type="text"
+                class="form-control"
+                id="username"
+                name="username"
+                placeholder="Username"
+                required
+              />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="email">Email</label>
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text"
+                  ><i class="fas fa-envelope"></i
+                ></span>
+              </div>
+              <input
+                type="email"
+                class="form-control"
+                id="email"
+                name="email"
+                placeholder="Email"
+                required
+              />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input
+              type="password"
+              class="form-control"
+              id="password"
+              name="password"
+              placeholder="Password"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="confirmPassword">Retype Password</label>
+            <input
+              type="password"
+              class="form-control"
+              id="confirmPassword"
+              placeholder="Retype Password"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="gender">Gender</label>
+            <select class="form-control" id="gender" name="gender">
+              <option>Male</option>
+              <option>Female</option>
+              <option>Other</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="phone">Phone Number</label>
+            <input
+              type="tel"
+              class="form-control"
+              id="phone"
+              name="phone"
+              placeholder="Phone Number"
+              pattern="03[0-9]{9}"
+              required
+            />
+            <small class="form-text text-muted">Format: +92</small>
+          </div>
+
+          <div class="text-center">
+            <button type="submit" class="btn btn-outline-success btn-lg">
+              Sign Up
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+      $(document).ready(function () {
+        if ($("#error-msg-container").text().trim().length > 0) {
+          $("#error-msg-container").show();
+        }
+        if ($("#success-msg-container").text().trim().length > 0) {
+          $("#success-msg-container").show();
+        }
+      });
+    </script>
+  </body>
+</html>

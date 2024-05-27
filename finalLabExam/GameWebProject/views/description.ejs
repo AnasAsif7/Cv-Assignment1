@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= game.name %> - Game Store</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/css/bootstrap.min.css"
+    />
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+      crossorigin="anonymous"
+    ></script>
+    <link rel="stylesheet" href="/stylesheets/styles.css" />
+
+    <link rel="stylesheet" href="/stylesheets/descstyles.css" /></head
+  ><style>
+    .game-container {
+      padding: 20px;
+    }
+
+    .game-header {
+      background-size: cover;
+      background-position: center;
+      color: white;
+      padding: 50px 0;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .game-info h1 {
+      font-size: 2.5em;
+      margin-bottom: 10px;
+    }
+
+    .game-info p {
+      font-size: 1.2em;
+    }
+
+    .game-details {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
+    }
+
+    .game-images {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
+      gap: 10px;
+    }
+
+    .game-images img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+
+    .game-images img:hover {
+      transform: scale(1.05);
+    }
+
+    .game-price {
+      margin-top: 10px;
+      flex: 1 1 100%;
+    }
+
+    .btn.add-to-cart {
+      background-color: #ffcc00;
+      color: #013369;
+      border: none;
+      padding: 10px 20px;
+      font-size: 1em;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .btn.add-to-cart:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 10px #ffcc00;
+    }
+
+    .video-section,
+    .description-section,
+    .system-requirements-section {
+      margin-top: 20px;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0, 0, 0, 0.9);
+      justify-content: center;
+      align-items: center;
+      transition: opacity 0.3s ease;
+    }
+
+    .modal-content {
+      max-width: 90%;
+      max-height: 80%;
+      margin: auto;
+      display: block;
+      transition: transform 0.3s ease;
+    }
+
+    .close {
+      position: absolute;
+      top: 15px;
+      right: 35px;
+      color: white;
+      font-size: 40px;
+      font-weight: bold;
+      transition: color 0.3s ease;
+    }
+
+    .close:hover,
+    .close:focus {
+      color: #ffcc00;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    @media (max-width: 768px) {
+      .game-details {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .game-images {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+      }
+
+      .game-price {
+        order: 3;
+      }
+    }
+    .game-info {
+      background: #0000005f;
+      padding: 10px 20px;
+      border-radius: 10px;
+      transition: transform 0.3s;
+      font-family: Arial, sans-serif !important;
+    }
+
+    .game-info:hover {
+      transform: scale(1.2) !important;
+    }
+  </style>
+  <body>
+    <%- include('navbar') %>
+    <div class="game-container" style="z-index: -233333">
+      <div
+        class="game-header"
+        style="
+          background-image: url('<%= game.descBigImg %>');
+          z-index: -233333;
+        "
+      >
+        <div class="game-info">
+          <h1><%= game.name %></h1>
+          <p>★ <%= game.rating %>/5 | English & 3 more</p>
+        </div>
+      </div>
+
+      <div class="game-details">
+        <div class="game-images">
+          <img
+            class="thumbnail"
+            src="<%= game.descImg1 %>"
+            alt="<%= game.name %> Screenshot 1"
+            onclick="openModal(this.src)"
+          />
+          <img
+            class="thumbnail"
+            src="<%= game.descImg2 %>"
+            alt="<%= game.name %> Screenshot 2"
+            onclick="openModal(this.src)"
+          />
+          <img
+            class="thumbnail"
+            src="<%= game.descImg3 %>"
+            alt="<%= game.name %> Screenshot 3"
+            onclick="openModal(this.src)"
+          />
+          <img
+            class="thumbnail"
+            src="<%= game.descImg4 %>"
+            alt="<%= game.name %> Screenshot 4"
+            onclick="openModal(this.src)"
+          />
+          <img
+            class="thumbnail"
+            src="<%= game.descImg5 %>"
+            alt="<%= game.name %> Screenshot 5"
+            onclick="openModal(this.src)"
+          />
+        </div>
+        <div class="game-price">
+          <p class="price">$<%= game.newPrice %></p>
+          <p class="discount">-<%= game.discountPercentage %>%</p>
+          <p class="original-price">$<%= game.oldPrice %></p>
+          <p class="offer-end">Offer ends on: 27/05/2024 09:59 EEST</p>
+          <form action="/add-cart/<%= game._id %>" method="post">
+            <button type="submit" class="btn add-to-cart">Add to cart</button>
+          </form>
+        </div>
+      </div>
+      <div class="video-section">
+        <h2>Game Trailer</h2>
+        <iframe
+          src="<%= game.gameTrailerLink %>"
+          frameborder="0"
+          allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen
+        ></iframe>
+      </div>
+      <div class="description-section">
+        <div class="description-container">
+          <h2>Description</h2>
+          <p><%= game.description %></p>
+        </div>
+      </div>
+      <div class="system-requirements-section">
+        <div class="system-requirements-container">
+          <h2>System requirements</h2>
+          <p><strong>Minimum system requirements:</strong></p>
+          <ul>
+            <li><strong>System:</strong> <%= game.sysReq %></li>
+            <li><strong>Processor:</strong> <%= game.procReq %></li>
+            <li><strong>Memory:</strong> <%= game.memReq %></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div id="imageModal" class="modal">
+      <span class="close" onclick="closeModal()">&times;</span>
+      <img class="modal-content" id="modalImage" />
+    </div>
+    <script src="/javascripts/script.js"></script>
+  </body>
+</html>

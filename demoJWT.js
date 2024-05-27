@@ -8,7 +8,8 @@ async function signup() {
       email: 'testuser3@example.com',
       password: 'password123',
       gender: 'Male',
-      phone: '03001234567'
+      phone: '03001234567',
+      isAdmin: false 
     });
     console.log('Signup successful:', response.data);
   } catch (error) {
