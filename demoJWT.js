@@ -5,7 +5,7 @@ async function signup() {
   try {
     const response = await axios.post('http://localhost:3000/api/signup', {
       username: 'testuser',
-      email: 'testuser1@example.com',
+      email: 'testuser3@example.com',
       password: 'password123',
       gender: 'Male',
       phone: '03001234567'
@@ -24,7 +24,7 @@ async function signup() {
 async function login() {
   try {
     const response = await axios.post('http://localhost:3000/api/login', {
-      email: 'testuser1@example.com',
+      email: 'testuser3@example.com',
       password: 'password123'
     });
     const { token } = response.data;

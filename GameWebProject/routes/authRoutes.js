@@ -2,6 +2,8 @@ const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcryptjs");
 const User = require("../models/User");
+const jwt = require("jsonwebtoken");
+const config = require("config");
 
 router.get("/signup", (req, res) => {
   res.render("signup");
@@ -74,6 +76,76 @@ router.get("/logout", (req, res) => {
   req.session.cart = null;
   req.flash("success_msg", "You are logged out");
   res.redirect("/login");
+});
+router.post("/api/signup", async (req, res) => {
+  const { username, email, password, gender, phone } = req.body;
+  try {
+    let user = await User.findOne({ email });
+    if (user) {
+      return res.status(400).json({ error: "User with given email already registered" });
+    }
+
+    user = new User({ username, email, password, gender, phone });
+    const salt = await bcrypt.genSalt(10);
+    user.password = await bcrypt.hash(password, salt);
+
+    await user.save();
+    const payload = {
+      user: {
+        id: user.id,
+        isAdmin: user.isAdmin,
+      },
+    };
+
+    jwt.sign(
+      payload,
+      config.get("jwtSecret"),
+      { expiresIn: "1h" },
+      (err, token) => {
+        if (err) throw err;
+        res.json({ token });
+      }
+    );
+  } catch (err) {
+    console.error("Error saving user:", err);
+    res.status(500).json({ error: "Server Error" });
+  }
+});
+
+// Login route
+router.post("/api/login", async (req, res) => {
+  const { email, password } = req.body;
+  try {
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(400).json({ error: "Invalid email or password." });
+    }
+
+    const validPassword = await bcrypt.compare(password, user.password);
+    if (!validPassword) {
+      return res.status(400).json({ error: "Invalid email or password." });
+    }
+
+    const payload = {
+      user: {
+        id: user.id,
+        isAdmin: user.isAdmin,
+      },
+    };
+
+    jwt.sign(
+      payload,
+      config.get("jwtSecret"),
+      { expiresIn: "1h" },
+      (err, token) => {
+        if (err) throw err;
+        res.json({ token });
+      }
+    );
+  } catch (err) {
+    console.error("Error during login:", err);
+    res.status(500).json({ error: "Server Error" });
+  }
 });
 
 module.exports = router;
